@@ -1028,3 +1028,762 @@ body {
     padding: 2rem 1.5rem;
   }
 }
+
+/* ==========================================
+   Enhanced Results Section Styles
+   ========================================== */
+
+/* Results Container Enhanced */
+.results-container.enhanced {
+  max-width: 1100px;
+}
+
+.results-header .results-date {
+  color: var(--gray-400);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Results Tabs */
+.results-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 1rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--gray-400);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tab-btn:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  color: var(--white);
+  background: var(--gradient-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.results-tab-content {
+  animation: fadeIn 0.4s ease;
+}
+
+/* Summary Card */
+.summary-card {
+  background: rgba(54, 99, 173, 0.15);
+  border: 1px solid rgba(54, 99, 173, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.summary-text {
+  color: var(--gray-200);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+/* Enhanced Trait Bar */
+.trait-bar.enhanced .bar-label {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.trait-bar.enhanced .trait-icon {
+  font-size: 1.25rem;
+}
+
+.trait-bar.enhanced .trait-level {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  color: var(--gray-300);
+}
+
+.trait-bar.enhanced .bar-track {
+  position: relative;
+  height: 16px;
+}
+
+.bar-markers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.bar-markers .marker {
+  position: absolute;
+  font-size: 0.65rem;
+  color: var(--gray-500);
+  transform: translateX(-50%);
+  top: -14px;
+}
+
+.bar-fill.animated {
+  animation: growWidth 1s ease-out forwards;
+}
+
+@keyframes growWidth {
+  from {
+    width: 0;
+  }
+}
+
+/* Quick Insights */
+.quick-insights {
+  margin-top: 2rem;
+}
+
+.quick-insights h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.insight-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.insight-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.insight-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.insight-icon {
+  font-size: 1.5rem;
+}
+
+.insight-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.insight-summary {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.insight-more {
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Detailed Analysis */
+.detailed-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.trait-analysis-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.trait-analysis-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.trait-analysis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.trait-title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.trait-icon-large {
+  font-size: 2.5rem;
+}
+
+.trait-title-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.trait-core-desc {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+  max-width: 400px;
+}
+
+.trait-score-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.score-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(54, 99, 173, 0.4);
+}
+
+.score-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.score-level {
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.trait-analysis-body {
+  padding: 0 1.5rem 1.5rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.trait-analysis-card.expanded .trait-analysis-body {
+  max-height: 2000px;
+  padding-top: 1.5rem;
+}
+
+.interpretation-section {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: rgba(54, 99, 173, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.interpretation-section h4 {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.interpretation-section p {
+  color: var(--gray-200);
+  line-height: 1.7;
+}
+
+/* Traits Grid (Strengths, Challenges, Growth) */
+.traits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.trait-column {
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+}
+
+.trait-column.strengths {
+  background: rgba(37, 188, 189, 0.1);
+  border: 1px solid rgba(37, 188, 189, 0.2);
+}
+
+.trait-column.challenges {
+  background: rgba(255, 150, 100, 0.1);
+  border: 1px solid rgba(255, 150, 100, 0.2);
+}
+
+.trait-column.growth {
+  background: rgba(100, 200, 100, 0.1);
+  border: 1px solid rgba(100, 200, 100, 0.2);
+}
+
+.trait-column h4 {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.trait-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.trait-column li {
+  font-size: 0.85rem;
+  color: var(--gray-300);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  line-height: 1.5;
+}
+
+.trait-column li:last-child {
+  border-bottom: none;
+}
+
+/* Facets Section */
+.facets-section {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.facets-section h4 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--gray-200);
+}
+
+.facets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.facet-item {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+}
+
+.facet-item strong {
+  display: block;
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.facet-item p {
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  line-height: 1.5;
+}
+
+/* Personality Patterns */
+.personality-patterns {
+  animation: fadeIn 0.4s ease;
+}
+
+.patterns-intro {
+  margin-bottom: 2rem;
+}
+
+.patterns-intro h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.patterns-intro p {
+  color: var(--gray-400);
+  line-height: 1.6;
+}
+
+.patterns-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.pattern-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all var(--transition-fast);
+}
+
+.pattern-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent);
+}
+
+.pattern-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.pattern-icon {
+  font-size: 2rem;
+}
+
+.pattern-header h4 {
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.pattern-description {
+  color: var(--gray-300);
+  line-height: 1.7;
+}
+
+.no-patterns {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  text-align: center;
+  color: var(--gray-400);
+}
+
+/* Trait Interactions */
+.trait-interactions {
+  margin-top: 2rem;
+}
+
+.trait-interactions h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.interactions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.interaction-card {
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+}
+
+.interaction-card.positive {
+  background: rgba(37, 188, 189, 0.1);
+  border: 1px solid rgba(37, 188, 189, 0.2);
+}
+
+.interaction-card.caution {
+  background: rgba(255, 180, 100, 0.1);
+  border: 1px solid rgba(255, 180, 100, 0.2);
+}
+
+.interaction-card h5 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+
+.interaction-card p {
+  font-size: 0.9rem;
+  color: var(--gray-300);
+  line-height: 1.6;
+}
+
+/* Counselor Insights */
+.counselor-insights {
+  animation: fadeIn 0.4s ease;
+}
+
+.counselor-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(22, 14, 68, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+}
+
+.notice-icon {
+  font-size: 1.5rem;
+}
+
+.counselor-notice p {
+  color: var(--gray-300);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.focus-areas-section {
+  margin-bottom: 2.5rem;
+}
+
+.focus-areas-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.focus-areas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.focus-area-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.focus-area-card.priority-high {
+  border-left: 4px solid #e74c3c;
+}
+
+.focus-area-card.priority-moderate {
+  border-left: 4px solid #f39c12;
+}
+
+.focus-area-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.priority-badge {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-sm);
+}
+
+.priority-badge.high {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.priority-badge.moderate {
+  background: rgba(243, 156, 18, 0.2);
+  color: #f39c12;
+}
+
+.focus-area-header h4 {
+  font-size: 1rem;
+}
+
+.focus-area-content {
+  padding: 1.25rem;
+}
+
+.focus-area-content p {
+  font-size: 0.9rem;
+  color: var(--gray-300);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.focus-area-content p:last-child {
+  margin-bottom: 0;
+}
+
+.clinical-notes-section {
+  margin-bottom: 2.5rem;
+}
+
+.clinical-notes-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.clinical-note-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.clinical-note-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.clinical-note-header .trait-badge {
+  width: 28px;
+  height: 28px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.clinical-note-header .trait-name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.trait-score-badge {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(54, 99, 173, 0.2);
+  border-radius: var(--radius-full);
+  color: var(--accent);
+}
+
+.clinical-note-text {
+  padding: 1.25rem;
+  color: var(--gray-300);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.assessment-notes {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.assessment-notes h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.assessment-notes ul {
+  list-style: none;
+  padding: 0;
+}
+
+.assessment-notes li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--gray-400);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.assessment-notes li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Responsive adjustments for enhanced results */
+@media (max-width: 1024px) {
+  .traits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .insights-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .facets-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .interactions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .results-tabs {
+    flex-direction: column;
+  }
+
+  .tab-btn {
+    min-width: auto;
+  }
+
+  .trait-analysis-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .trait-title-section {
+    flex-direction: column;
+  }
+
+  .trait-core-desc {
+    max-width: 100%;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clinical-note-header {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-card {
+    padding: 1.5rem;
+  }
+
+  .trait-analysis-header {
+    padding: 1rem;
+  }
+
+  .trait-analysis-body {
+    padding: 0 1rem 1rem;
+  }
+
+  .trait-column {
+    padding: 1rem;
+  }
+}
