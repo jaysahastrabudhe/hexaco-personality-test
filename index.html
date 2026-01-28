@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEXACO Personality Test | Discover Your Personality</title>
+    <meta name="description" content="Take the official HEXACO-PI-R personality test to discover your unique personality profile across six dimensions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Animated Background -->
+        <div class="bg-animation">
+            <div class="bg-orb orb-1"></div>
+            <div class="bg-orb orb-2"></div>
+            <div class="bg-orb orb-3"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="logo.png" alt="HEXACO Logo" class="logo">
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-link active" data-section="home">Home</a>
+                <a href="#" class="nav-link" data-section="test">Take Test</a>
+                <a href="#" class="nav-link" data-section="about">About</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section id="home" class="section active">
+                <div class="hero">
+                    <div class="hero-content">
+                        <span class="hero-badge">HEXACO-PI-R Assessment</span>
+                        <h1 class="hero-title">
+                            Discover Your <span class="gradient-text">True Personality</span>
+                        </h1>
+                        <p class="hero-description">
+                            Take the scientifically validated HEXACO personality test to explore six fundamental dimensions of your personality. Gain insights into your Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, and Openness to Experience.
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat">
+                                <span class="stat-number">60</span>
+                                <span class="stat-label">Questions</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">6</span>
+                                <span class="stat-label">Dimensions</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">15</span>
+                                <span class="stat-label">Minutes</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary pulse-animation" onclick="startTest()">
+                            <span>Begin Your Journey</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="personality-wheel">
+                            <div class="wheel-segment" data-trait="H" style="--rotation: 0deg; --color: #3663AD;">
+                                <span>H</span>
+                            </div>
+                            <div class="wheel-segment" data-trait="E" style="--rotation: 60deg; --color: #25BCBD;">
+                                <span>E</span>
+                            </div>
+                            <div class="wheel-segment" data-trait="X" style="--rotation: 120deg; --color: #160E44;">
+                                <span>X</span>
+                            </div>
+                            <div class="wheel-segment" data-trait="A" style="--rotation: 180deg; --color: #3663AD;">
+                                <span>A</span>
+                            </div>
+                            <div class="wheel-segment" data-trait="C" style="--rotation: 240deg; --color: #25BCBD;">
+                                <span>C</span>
+                            </div>
+                            <div class="wheel-segment" data-trait="O" style="--rotation: 300deg; --color: #160E44;">
+                                <span>O</span>
+                            </div>
+                            <div class="wheel-center">
+                                <span>HEXACO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trait Cards -->
+                <div class="traits-section">
+                    <h2 class="section-title">The Six Dimensions</h2>
+                    <div class="traits-grid">
+                        <div class="trait-card" data-trait="H">
+                            <div class="trait-icon">H</div>
+                            <h3>Honesty-Humility</h3>
+                            <p>Sincerity, fairness, greed avoidance, and modesty in interpersonal relations.</p>
+                        </div>
+                        <div class="trait-card" data-trait="E">
+                            <div class="trait-icon">E</div>
+                            <h3>Emotionality</h3>
+                            <p>Fearfulness, anxiety, dependence, and sentimentality in emotional responses.</p>
+                        </div>
+                        <div class="trait-card" data-trait="X">
+                            <div class="trait-icon">X</div>
+                            <h3>Extraversion</h3>
+                            <p>Social self-esteem, social boldness, sociability, and liveliness.</p>
+                        </div>
+                        <div class="trait-card" data-trait="A">
+                            <div class="trait-icon">A</div>
+                            <h3>Agreeableness</h3>
+                            <p>Forgivingness, gentleness, flexibility, and patience with others.</p>
+                        </div>
+                        <div class="trait-card" data-trait="C">
+                            <div class="trait-icon">C</div>
+                            <h3>Conscientiousness</h3>
+                            <p>Organization, diligence, perfectionism, and prudence in actions.</p>
+                        </div>
+                        <div class="trait-card" data-trait="O">
+                            <div class="trait-icon">O</div>
+                            <h3>Openness</h3>
+                            <p>Aesthetic appreciation, inquisitiveness, creativity, and unconventionality.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Info Section -->
+            <section id="user-info" class="section">
+                <div class="user-info-container">
+                    <div class="form-header">
+                        <h2>Let's Get Started</h2>
+                        <p>Please provide some basic information before beginning the test</p>
+                    </div>
+                    <form id="user-form" class="user-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" name="dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select your gender</option>
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not">Prefer not to say</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Continue to Test</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Test Section -->
+            <section id="test" class="section">
+                <div class="test-container">
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span class="progress-text">Question <span id="current-question">1</span> of <span id="total-questions">60</span></span>
+                            <span class="progress-percentage" id="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="question-card">
+                        <div class="question-number" id="question-number">01</div>
+                        <p class="question-text" id="question-text">Loading question...</p>
+                        
+                        <div class="answer-options">
+                            <label class="answer-option">
+                                <input type="radio" name="answer" value="1">
+                                <span class="option-label">Strongly Disagree</span>
+                            </label>
+                            <label class="answer-option">
+                                <input type="radio" name="answer" value="2">
+                                <span class="option-label">Disagree</span>
+                            </label>
+                            <label class="answer-option">
+                                <input type="radio" name="answer" value="3">
+                                <span class="option-label">Neutral</span>
+                            </label>
+                            <label class="answer-option">
+                                <input type="radio" name="answer" value="4">
+                                <span class="option-label">Agree</span>
+                            </label>
+                            <label class="answer-option">
+                                <input type="radio" name="answer" value="5">
+                                <span class="option-label">Strongly Agree</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="test-navigation">
+                        <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                            </svg>
+                            <span>Previous</span>
+                        </button>
+                        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">
+                            <span>Next</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results" class="section">
+                <div class="results-container">
+                    <div class="results-header">
+                        <h2>Your Personality Profile</h2>
+                        <p class="results-name" id="results-name"></p>
+                    </div>
+
+                    <div class="results-chart">
+                        <div class="chart-container">
+                            <div class="trait-bar" data-trait="H">
+                                <div class="bar-label">
+                                    <span class="trait-name">Honesty-Humility</span>
+                                    <span class="trait-score" id="score-H">0%</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill" id="bar-H"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar" data-trait="E">
+                                <div class="bar-label">
+                                    <span class="trait-name">Emotionality</span>
+                                    <span class="trait-score" id="score-E">0%</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill" id="bar-E"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar" data-trait="X">
+                                <div class="bar-label">
+                                    <span class="trait-name">Extraversion</span>
+                                    <span class="trait-score" id="score-X">0%</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill" id="bar-X"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar" data-trait="A">
+                                <div class="bar-label">
+                                    <span class="trait-name">Agreeableness</span>
+                                    <span class="trait-score" id="score-A">0%</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill" id="bar-A"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar" data-trait="C">
+                                <div class="bar-label">
+                                    <span class="trait-name">Conscientiousness</span>
+                                    <span class="trait-score" id="score-C">0%</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill" id="bar-C"></div>
+                                </div>
+                            </div>
+                            <div class="trait-bar" data-trait="O">
+                                <div class="bar-label">
+                                    <span class="trait-name">Openness to Experience</span>
+                                    <span class="trait-score" id="score-O">0%</span>
+                                </div>
+                                <div class="bar-track">
+                                    <div class="bar-fill" id="bar-O"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trait Descriptions -->
+                    <div class="trait-descriptions" id="trait-descriptions">
+                        <!-- Dynamically populated -->
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="results-actions">
+                        <button class="btn btn-primary" onclick="downloadPDF()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                            </svg>
+                            <span>Download PDF Report</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="retakeTest()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 4v6h6M23 20v-6h-6"/>
+                                <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/>
+                            </svg>
+                            <span>Retake Test</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="section">
+                <div class="about-container">
+                    <h2>About the HEXACO Model</h2>
+                    <div class="about-content">
+                        <p>The HEXACO model of personality structure is a six-dimensional model of human personality that was created by Ashton and Lee and explained in their book, <em>The H Factor of Personality</em>.</p>
+                        <p>The six factors, or dimensions, include:</p>
+                        <ul>
+                            <li><strong>Honesty-Humility (H)</strong>: Sincerity, fairness, greed avoidance, modesty</li>
+                            <li><strong>Emotionality (E)</strong>: Fearfulness, anxiety, dependence, sentimentality</li>
+                            <li><strong>Extraversion (X)</strong>: Social self-esteem, social boldness, sociability, liveliness</li>
+                            <li><strong>Agreeableness (A)</strong>: Forgivingness, gentleness, flexibility, patience</li>
+                            <li><strong>Conscientiousness (C)</strong>: Organization, diligence, perfectionism, prudence</li>
+                            <li><strong>Openness to Experience (O)</strong>: Aesthetic appreciation, inquisitiveness, creativity, unconventionality</li>
+                        </ul>
+                        <p>This test uses the HEXACO-PI-R (HEXACO Personality Inventory - Revised) 60-item version developed by Dr. Kibeom Lee and Dr. Michael C. Ashton.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 HEXACO Personality Assessment. Based on research by Lee & Ashton.</p>
+        </footer>
+    </div>
+
+    <!-- jsPDF Library for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
