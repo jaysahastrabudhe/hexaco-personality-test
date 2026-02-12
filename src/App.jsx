@@ -302,7 +302,7 @@ function HexacoTest({ answers, onAnswer, onClose }) {
       </div>
       <div className="nav-buttons">
         <button onClick={handlePrev} disabled={currentQ === 0} className="btn-text">Back</button>
-        <button onClick={onClose} className="btn-text skip-btn">Skip Section (Dev)</button>
+
       </div>
     </div>
   );
