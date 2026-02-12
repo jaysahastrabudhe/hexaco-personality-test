@@ -11,6 +11,8 @@ import {
   getScoreLabel
 } from './data/personalityInsights';
 import { jsPDF } from 'jspdf';
+import { supabase, uploadPhoto, submitTestResults } from './supabaseClient';
+
 
 // --- Components ---
 
@@ -357,13 +359,13 @@ function NonVerbalTest({ answers, onAnswer, onComplete }) {
     if (currentQ < nonVerbalQuestions.length - 1) {
       setCurrentQ(currentQ + 1);
     } else {
-      onComplete();
+      onComplete({ timedOut: false, questionsAnswered: Object.keys(answers).length + 1 });
     }
   };
 
   const handleTimeUp = () => {
     // Auto-submit when time runs out
-    onComplete();
+    onComplete({ timedOut: true, questionsAnswered: Object.keys(answers).length });
   };
 
   const q = nonVerbalQuestions[currentQ];
@@ -458,14 +460,14 @@ function VerbalTest({ answers, onAnswer, onComplete }) {
 
   const handleTimeUp = () => {
     // Auto-submit when time runs out
-    onComplete();
+    onComplete({ timedOut: true, questionsAnswered: Object.keys(answers).length });
   };
 
   const handleNext = () => {
     if (currentPassageIdx < verbalQuestions.length - 1) {
       setCurrentPassageIdx(currentPassageIdx + 1);
     } else {
-      onComplete();
+      onComplete({ timedOut: false, questionsAnswered: Object.keys(answers).length });
     }
   };
 
@@ -525,15 +527,19 @@ function VerbalTest({ answers, onAnswer, onComplete }) {
 }
 
 // 6. Completion Popup
-function CompletionModal({ onShowResults }) {
+function CompletionModal({ onShowResults, isSubmitting = false }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <div className="success-icon">✨</div>
-        <h2>Battery Complete</h2>
-        <p>Congratulations. Your profile has been analyzed.</p>
-        <button className="btn btn-primary pulse-animation" onClick={onShowResults}>
-          View Admission Results
+        <div className="success-icon">{isSubmitting ? '⏳' : '✨'}</div>
+        <h2>{isSubmitting ? 'Saving Results...' : 'Battery Complete'}</h2>
+        <p>{isSubmitting ? 'Please wait while we save your assessment.' : 'Congratulations. Your profile has been analyzed.'}</p>
+        <button
+          className="btn btn-primary pulse-animation"
+          onClick={onShowResults}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Processing...' : 'View Admission Results'}
         </button>
       </div>
     </div>
@@ -541,10 +547,21 @@ function CompletionModal({ onShowResults }) {
 }
 
 // 7. Results Dashboard - Comprehensive & Detailed
-function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, userData }) {
+function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, userData, sessionId, submitError, sectionTimings = {} }) {
+
+  // Helper: format seconds to mm:ss
+  const formatTime = (seconds) => {
+    if (!seconds && seconds !== 0) return '--:--';
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}m ${String(s).padStart(2, '0')}s`;
+  };
+
+  const totalTestTime = Object.values(sectionTimings).reduce((sum, t) => sum + (t.elapsed || 0), 0);
   const [expandedTrait, setExpandedTrait] = useState(null);
   const [showCounselorNotes, setShowCounselorNotes] = useState(false);
-  const candidateId = useRef(Math.random().toString(36).substr(2, 9).toUpperCase());
+  // Use provided sessionId or generate one for dev mode
+  const candidateId = useRef(sessionId || Math.random().toString(36).substr(2, 9).toUpperCase());
 
   // Calculate Personality Archetype
   const typeCounts = {};
@@ -588,91 +605,582 @@ function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, u
   const vLevel = getCognitiveLevel(vPercent);
   const overallLevel = getCognitiveLevel(cognitiveAvg);
 
-  // Generate PDF Report
+  // Generate PDF Report - Enhanced with modern styling matching the results page
   const downloadPDF = () => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    // Color Palette (matching results page)
+    const colors = {
+      bgDark: [15, 15, 23],           // Dark surface
+      bgCard: [26, 26, 38],           // Card background
+      accentPrimary: [124, 124, 240], // Purple #7C7CF0
+      accentSecondary: [0, 217, 255], // Cyan #00D9FF
+      accentSuccess: [16, 185, 129],  // Green #10B981
+      accentWarning: [249, 115, 22],  // Orange
+      textPrimary: [255, 255, 255],
+      textSecondary: [180, 180, 200],
+      textMuted: [120, 120, 140]
+    };
+
+    // Helper: Draw rounded rectangle
+    const drawRoundedRect = (x, y, w, h, r, fillColor, strokeColor = null) => {
+      doc.setFillColor(...fillColor);
+      if (strokeColor) {
+        doc.setDrawColor(...strokeColor);
+        doc.setLineWidth(0.5);
+      }
+      doc.roundedRect(x, y, w, h, r, r, strokeColor ? 'FD' : 'F');
+    };
+
+    // Helper: Draw gradient-like bar (simulated with color progression)
+    const drawGradientBar = (x, y, w, h, percent, startColor, endColor) => {
+      const barWidth = (w * percent) / 100;
+      // Background
+      doc.setFillColor(40, 40, 55);
+      doc.roundedRect(x, y, w, h, h / 2, h / 2, 'F');
+      // Filled portion with accent color
+      if (barWidth > 0) {
+        doc.setFillColor(...startColor);
+        doc.roundedRect(x, y, Math.max(barWidth, h), h, h / 2, h / 2, 'F');
+      }
+    };
+
+    // Helper: Get level color
+    const getLevelColor = (level) => {
+      switch (level) {
+        case 'veryLow': return [239, 68, 68];
+        case 'low': return [249, 115, 22];
+        case 'moderate': return [234, 179, 8];
+        case 'high': return [34, 197, 94];
+        case 'veryHigh': return [6, 182, 212];
+        default: return colors.textSecondary;
+      }
+    };
+
+    // PDF-safe trait labels (emojis don't render in jsPDF default fonts)
+    const pdfTraitLabels = {
+      H: { name: 'Honesty-Humility', symbol: '[H]' },
+      E: { name: 'Emotionality', symbol: '[E]' },
+      X: { name: 'Extraversion', symbol: '[X]' },
+      A: { name: 'Agreeableness', symbol: '[A]' },
+      C: { name: 'Conscientiousness', symbol: '[C]' },
+      O: { name: 'Openness to Experience', symbol: '[O]' }
+    };
+
+    // Helper: Get PDF-safe trait label
+    const getPdfTraitLabel = (trait, analysis) => {
+      const pdfLabel = pdfTraitLabels[trait];
+      if (pdfLabel) {
+        return `${pdfLabel.symbol} ${pdfLabel.name}`;
+      }
+      // Fallback: strip emojis from analysis name
+      const name = analysis?.name || trait;
+      return `[${trait}] ${name}`;
+    };
+
+    // === PAGE 1: Header & Candidate Info ===
+
+    // Full page dark background
+    doc.setFillColor(...colors.bgDark);
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+
+    // Top accent gradient bar
+    doc.setFillColor(...colors.accentPrimary);
+    doc.rect(0, 0, pageWidth, 6, 'F');
+    doc.setFillColor(...colors.accentSecondary);
+    doc.rect(pageWidth * 0.6, 0, pageWidth * 0.4, 6, 'F');
+
     let y = 20;
 
-    // Header
-    doc.setFontSize(22);
-    doc.setTextColor(138, 43, 226);
-    doc.text('LExam Assessment Results', pageWidth / 2, y, { align: 'center' });
+    // Title
+    doc.setTextColor(...colors.textPrimary);
+    doc.setFontSize(28);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Comprehensive Assessment', pageWidth / 2, y, { align: 'center' });
+    y += 10;
+    doc.setTextColor(...colors.accentSecondary);
+    doc.text('Report', pageWidth / 2, y, { align: 'center' });
+    y += 15;
+
+    // Candidate Card Background
+    const cardY = y;
+    drawRoundedRect(15, cardY, pageWidth - 30, 50, 3, colors.bgCard, [60, 60, 80]);
+
+    // Add Photo if available
+    const photoSize = 40;
+    const photoX = 22;
+    const photoY = cardY + 5;
+
+    if (userData.photo) {
+      try {
+        // Add circular photo
+        doc.addImage(userData.photo, 'JPEG', photoX, photoY, photoSize, photoSize);
+        // Draw border around photo
+        doc.setDrawColor(...colors.accentPrimary);
+        doc.setLineWidth(1.5);
+        doc.circle(photoX + photoSize / 2, photoY + photoSize / 2, photoSize / 2, 'S');
+      } catch (e) {
+        // Photo placeholder if image fails
+        doc.setFillColor(60, 60, 80);
+        doc.circle(photoX + photoSize / 2, photoY + photoSize / 2, photoSize / 2, 'F');
+        doc.setTextColor(...colors.textMuted);
+        doc.setFontSize(8);
+        doc.text('No Photo', photoX + photoSize / 2, photoY + photoSize / 2 + 2, { align: 'center' });
+      }
+    } else {
+      // Photo placeholder
+      doc.setFillColor(45, 45, 60);
+      doc.circle(photoX + photoSize / 2, photoY + photoSize / 2, photoSize / 2, 'F');
+      doc.setDrawColor(80, 80, 100);
+      doc.setLineWidth(1);
+      doc.circle(photoX + photoSize / 2, photoY + photoSize / 2, photoSize / 2, 'S');
+      doc.setTextColor(...colors.textMuted);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text('N/A', photoX + photoSize / 2, photoY + photoSize / 2 + 3, { align: 'center' });
+    }
+
+    // Candidate Info
+    const infoX = photoX + photoSize + 15;
+    doc.setTextColor(...colors.textPrimary);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text(userData.name || 'Candidate', infoX, cardY + 18);
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(...colors.textSecondary);
+    doc.text(`ID: ${candidateId.current}`, infoX, cardY + 28);
+    doc.text(`Email: ${userData.email || 'Not provided'}`, infoX, cardY + 36);
+    doc.text(`Date: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, infoX, cardY + 44);
+
+    y = cardY + 60;
+
+    // Archetype Section
+    drawRoundedRect(15, y, pageWidth - 30, 35, 3, [40, 30, 60], [100, 60, 150]);
+
+    doc.setTextColor(...colors.accentPrimary);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.text('YOUR PRIMARY PERSONALITY ARCHETYPE', 25, y + 10);
+
+    doc.setTextColor(...colors.textPrimary);
+    doc.setFontSize(20);
+    doc.text(badge.title, 25, y + 23);
+
+    // Archetype decorative accent on the right
+    doc.setFillColor(...colors.accentPrimary);
+    doc.roundedRect(pageWidth - 50, y + 8, 20, 20, 3, 3, 'F');
+    doc.setFillColor(...colors.accentSecondary);
+    doc.roundedRect(pageWidth - 47, y + 11, 14, 14, 2, 2, 'F');
+
+    y += 45;
+
+    // HEXACO Personality Profile Section
+    doc.setTextColor(...colors.textPrimary);
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.text('HEXACO Personality Profile', 15, y);
+    y += 8;
+
+    // Trait Cards
+    Object.entries(hexacoResults.percentages || {}).forEach(([trait, score]) => {
+      const analysis = traitAnalysis[trait];
+      const level = getScoreLevel(score);
+      const levelColor = getLevelColor(level);
+
+      if (y > 260) {
+        doc.addPage();
+        doc.setFillColor(...colors.bgDark);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        y = 20;
+      }
+
+      // Trait row background
+      drawRoundedRect(15, y, pageWidth - 30, 18, 2, colors.bgCard);
+
+      // Trait icon and name
+      doc.setTextColor(...colors.textPrimary);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text(getPdfTraitLabel(trait, analysis), 20, y + 8);
+
+      // Score percentage
+      doc.setTextColor(...colors.accentPrimary);
+      doc.setFontSize(12);
+      doc.text(`${score}%`, pageWidth - 40, y + 8);
+
+      // Level badge
+      doc.setFillColor(...levelColor);
+      const levelText = getScoreLabel(score);
+      const levelWidth = doc.getTextWidth(levelText) + 8;
+      doc.roundedRect(pageWidth - 40 - levelWidth - 5, y + 3, levelWidth, 6, 1, 1, 'F');
+      doc.setTextColor(...colors.bgDark);
+      doc.setFontSize(6);
+      doc.setFont('helvetica', 'bold');
+      doc.text(levelText, pageWidth - 40 - levelWidth / 2 - 2, y + 7.5, { align: 'center' });
+
+      // Progress bar
+      drawGradientBar(20, y + 12, 100, 3, score, colors.accentPrimary, colors.accentSecondary);
+
+      y += 22;
+    });
+
+    y += 5;
+
+    // === COGNITIVE PERFORMANCE SECTION ===
+    if (y > 200) {
+      doc.addPage();
+      doc.setFillColor(...colors.bgDark);
+      doc.rect(0, 0, pageWidth, pageHeight, 'F');
+      y = 20;
+    }
+
+    doc.setTextColor(...colors.textPrimary);
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Cognitive Performance Analysis', 15, y);
     y += 12;
 
-    doc.setFontSize(12);
-    doc.setTextColor(100);
-    doc.text(`Candidate: ${userData.name}`, 20, y);
-    doc.text(`ID: ${candidateId.current}`, pageWidth - 60, y);
-    y += 8;
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, y);
-    y += 15;
+    // Cognitive cards
+    const cogData = [
+      { label: 'Non-Verbal Reasoning', score: nvPercent, detail: `${nvScore}/${nonVerbalQuestions.length} correct`, level: nvLevel, icon: 'NV' },
+      { label: 'Verbal Reasoning', score: vPercent, detail: `${vScore}/${totalV} correct`, level: vLevel, icon: 'VR' },
+      { label: 'Overall Cognitive', score: cognitiveAvg, detail: 'Combined score', level: overallLevel, icon: 'OC' }
+    ];
 
-    // Archetype
-    doc.setFontSize(16);
-    doc.setTextColor(0);
-    doc.text(`Personality Archetype: ${badge.title}`, 20, y);
-    y += 8;
-    doc.setFontSize(11);
-    doc.setTextColor(80);
-    doc.text(badge.desc, 20, y);
-    y += 15;
+    const cardWidth = (pageWidth - 45) / 3;
+    cogData.forEach((cog, i) => {
+      const cardX = 15 + i * (cardWidth + 7);
 
-    // HEXACO Scores
+      // Card background
+      if (i === 2) {
+        drawRoundedRect(cardX, y, cardWidth, 45, 3, [45, 30, 70], [100, 60, 150]);
+      } else {
+        drawRoundedRect(cardX, y, cardWidth, 45, 3, colors.bgCard, [60, 60, 80]);
+      }
+
+      // Icon text
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...(i === 2 ? colors.accentSecondary : colors.accentPrimary));
+      doc.text(cog.icon, cardX + 8, y + 14);
+
+      // Badge
+      doc.setFillColor(...(cog.level.color === '#10b981' ? colors.accentSuccess :
+        cog.level.color === '#22c55e' ? [34, 197, 94] :
+          cog.level.color === '#f59e0b' ? [245, 158, 11] :
+            cog.level.color === '#f97316' ? colors.accentWarning :
+              [239, 68, 68]));
+      doc.roundedRect(cardX + cardWidth - 35, y + 6, 28, 6, 1, 1, 'F');
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(5);
+      doc.setFont('helvetica', 'bold');
+      doc.text(cog.level.label.toUpperCase(), cardX + cardWidth - 21, y + 10.5, { align: 'center' });
+
+      // Score
+      doc.setTextColor(...(i === 2 ? colors.accentSecondary : colors.textPrimary));
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${cog.score}%`, cardX + cardWidth / 2, y + 30, { align: 'center' });
+
+      // Label
+      doc.setTextColor(...colors.textMuted);
+      doc.setFontSize(7);
+      doc.setFont('helvetica', 'normal');
+      doc.text(cog.label, cardX + cardWidth / 2, y + 38, { align: 'center' });
+    });
+
+    y += 55;
+
+    // === SECTION TIMING SUMMARY ===
+    if (Object.keys(sectionTimings).length > 0) {
+      if (y > 200) {
+        doc.addPage();
+        doc.setFillColor(...colors.bgDark);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        y = 20;
+      }
+
+      doc.setTextColor(...colors.textPrimary);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Assessment Timing Summary', 15, y);
+      y += 5;
+
+      const totalTime = Object.values(sectionTimings).reduce((sum, t) => sum + (t.elapsed || 0), 0);
+      doc.setTextColor(...colors.textMuted);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Total assessment time: ${Math.floor(totalTime / 60)}m ${String(totalTime % 60).padStart(2, '0')}s`, 15, y + 4);
+      y += 10;
+
+      const timingSections = [
+        { key: 'hexaco', label: 'HEXACO Personality', timed: false },
+        { key: 'persona', label: 'Cognitive Style', timed: false },
+        { key: 'nonVerbal', label: 'Non-Verbal Reasoning', timed: true, limit: testTimeLimits.nonVerbal },
+        { key: 'verbal', label: 'Verbal Reasoning', timed: true, limit: testTimeLimits.verbal }
+      ];
+
+      const colW = (pageWidth - 35) / 4;
+      timingSections.forEach((sec, i) => {
+        const t = sectionTimings[sec.key];
+        if (!t) return;
+        const cx = 15 + i * (colW + 5);
+
+        // Card bg
+        if (t.timedOut) {
+          drawRoundedRect(cx, y, colW, 30, 2, [60, 20, 20], [200, 60, 60]);
+        } else {
+          drawRoundedRect(cx, y, colW, 30, 2, colors.bgCard, [60, 60, 80]);
+        }
+
+        // Label
+        doc.setTextColor(...colors.textMuted);
+        doc.setFontSize(6);
+        doc.setFont('helvetica', 'normal');
+        doc.text(sec.label, cx + colW / 2, y + 7, { align: 'center' });
+
+        // Time value
+        doc.setTextColor(...colors.textPrimary);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        const mins = Math.floor((t.elapsed || 0) / 60);
+        const secs = (t.elapsed || 0) % 60;
+        doc.text(`${mins}m ${String(secs).padStart(2, '0')}s`, cx + colW / 2, y + 18, { align: 'center' });
+
+        // Detail
+        doc.setTextColor(...colors.textMuted);
+        doc.setFontSize(5.5);
+        doc.setFont('helvetica', 'normal');
+        if (t.timedOut) {
+          doc.setTextColor(255, 100, 100);
+          doc.text(`TIMED OUT (${t.questionsAnswered}/${t.totalQuestions})`, cx + colW / 2, y + 25, { align: 'center' });
+        } else if (t.questionsAnswered !== undefined) {
+          doc.text(`${t.questionsAnswered}/${t.totalQuestions} answered`, cx + colW / 2, y + 25, { align: 'center' });
+        } else {
+          doc.text('Untimed', cx + colW / 2, y + 25, { align: 'center' });
+        }
+      });
+
+      y += 40;
+    }
+
+    // === PROFILE SUMMARY ===
+    if (y > 210) {
+      doc.addPage();
+      doc.setFillColor(...colors.bgDark);
+      doc.rect(0, 0, pageWidth, pageHeight, 'F');
+      y = 20;
+    }
+
+    doc.setTextColor(...colors.textPrimary);
     doc.setFontSize(16);
-    doc.setTextColor(0);
-    doc.text('HEXACO Personality Dimensions', 20, y);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Comprehensive Profile Summary', 15, y);
     y += 10;
 
-    doc.setFontSize(11);
+    // Summary card
+    drawRoundedRect(15, y, pageWidth - 30, 55, 3, colors.bgCard, [60, 60, 80]);
+
+    doc.setTextColor(...colors.textSecondary);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    const summary = generatePersonalitySummary(hexacoResults.percentages || {});
+    const summaryLines = doc.splitTextToSize(summary, pageWidth - 50);
+    doc.text(summaryLines.slice(0, 8), 22, y + 10);
+
+    // === PAGE 3: DETAILED TRAIT ANALYSIS ===
+    doc.addPage();
+    doc.setFillColor(...colors.bgDark);
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+    y = 20;
+
+    // Page header
+    doc.setFillColor(...colors.accentPrimary);
+    doc.rect(0, 0, pageWidth, 6, 'F');
+
+    doc.setTextColor(...colors.textPrimary);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Detailed Trait Analysis', 15, y);
+    y += 12;
+
+    // Add detailed analysis for each trait
+    Object.entries(hexacoResults.percentages || {}).forEach(([trait, score]) => {
+      const analysis = traitAnalysis[trait];
+      const level = getScoreLevel(score);
+      const interp = analysis?.interpretations?.[level];
+      const levelColor = getLevelColor(level);
+
+      if (y > 240) {
+        doc.addPage();
+        doc.setFillColor(...colors.bgDark);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        doc.setFillColor(...colors.accentPrimary);
+        doc.rect(0, 0, pageWidth, 6, 'F');
+        y = 20;
+      }
+
+      // Trait header
+      drawRoundedRect(15, y, pageWidth - 30, 10, 2, [40, 40, 55]);
+      doc.setTextColor(...colors.textPrimary);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${getPdfTraitLabel(trait, analysis)} - ${score}%`, 20, y + 7);
+
+      // Level badge
+      doc.setFillColor(...levelColor);
+      doc.roundedRect(pageWidth - 55, y + 2, 30, 6, 1, 1, 'F');
+      doc.setTextColor(...colors.bgDark);
+      doc.setFontSize(6);
+      doc.text(getScoreLabel(score), pageWidth - 40, y + 6, { align: 'center' });
+      y += 14;
+
+      // Interpretation summary
+      if (interp?.summary) {
+        doc.setTextColor(...colors.textSecondary);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        const interpLines = doc.splitTextToSize(interp.summary, pageWidth - 35);
+        doc.text(interpLines.slice(0, 3), 20, y);
+        y += interpLines.slice(0, 3).length * 4 + 4;
+      }
+
+      // Strengths
+      if (interp?.strengths && interp.strengths.length > 0) {
+        doc.setTextColor(...colors.accentSuccess);
+        doc.setFontSize(7);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Strengths:', 20, y);
+        doc.setTextColor(...colors.textSecondary);
+        doc.setFont('helvetica', 'normal');
+        interp.strengths.slice(0, 2).forEach((s, i) => {
+          doc.text(`• ${s}`, 25, y + 4 + i * 4);
+        });
+        y += 12;
+      }
+
+      // Challenges
+      if (interp?.challenges && interp.challenges.length > 0) {
+        doc.setTextColor(...colors.accentWarning);
+        doc.setFontSize(7);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Growth Areas:', 20, y);
+        doc.setTextColor(...colors.textSecondary);
+        doc.setFont('helvetica', 'normal');
+        interp.challenges.slice(0, 2).forEach((c, i) => {
+          doc.text(`• ${c}`, 25, y + 4 + i * 4);
+        });
+        y += 16;
+      }
+    });
+
+    // === PAGE 4: COUNSELOR INSIGHTS ===
+    doc.addPage();
+    doc.setFillColor(...colors.bgDark);
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+    y = 20;
+
+    // Page header
+    doc.setFillColor(...colors.accentSecondary);
+    doc.rect(0, 0, pageWidth, 6, 'F');
+
+    doc.setTextColor(...colors.textPrimary);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Professional Insights', 15, y);
+    y += 8;
+    doc.setTextColor(...colors.textMuted);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text('For counselors, educators, and mental health professionals', 15, y);
+    y += 15;
+
+    // Disclaimer
+    drawRoundedRect(15, y, pageWidth - 30, 18, 2, [60, 40, 30], [249, 115, 22]);
+    doc.setTextColor(...colors.accentWarning);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Note:', 20, y + 7);
+    doc.setTextColor(...colors.textSecondary);
+    doc.setFont('helvetica', 'normal');
+    doc.text('These insights are intended to support understanding of the candidate\'s profile.', 35, y + 7);
+    doc.text('They should be used as one component of a comprehensive assessment approach.', 20, y + 13);
+    y += 25;
+
+    // Counselor notes for each trait
     Object.entries(hexacoResults.percentages || {}).forEach(([trait, score]) => {
       const analysis = traitAnalysis[trait];
       const level = getScoreLevel(score);
       const interp = analysis?.interpretations?.[level];
 
-      doc.setTextColor(0);
-      doc.text(`${analysis?.name || trait}: ${score}% (${getScoreLabel(score)})`, 20, y);
-      y += 6;
+      if (!interp?.counselorNotes) return;
 
-      if (interp?.summary) {
-        doc.setTextColor(80);
-        const lines = doc.splitTextToSize(interp.summary, pageWidth - 40);
-        doc.text(lines, 25, y);
-        y += lines.length * 5 + 4;
-      }
-
-      if (y > 260) {
+      if (y > 250) {
         doc.addPage();
+        doc.setFillColor(...colors.bgDark);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        doc.setFillColor(...colors.accentSecondary);
+        doc.rect(0, 0, pageWidth, 6, 'F');
         y = 20;
       }
+
+      doc.setTextColor(...colors.accentPrimary);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${getPdfTraitLabel(trait, analysis)} (${getScoreLabel(score)})`, 15, y);
+      y += 6;
+
+      doc.setTextColor(...colors.textSecondary);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      const noteLines = doc.splitTextToSize(interp.counselorNotes, pageWidth - 35);
+      doc.text(noteLines.slice(0, 4), 15, y);
+      y += noteLines.slice(0, 4).length * 4 + 8;
     });
 
+    // Focus Areas
+    if (y > 240) {
+      doc.addPage();
+      doc.setFillColor(...colors.bgDark);
+      doc.rect(0, 0, pageWidth, pageHeight, 'F');
+      y = 20;
+    }
+
     y += 5;
+    drawRoundedRect(15, y, pageWidth - 30, 35, 3, [30, 45, 40], [16, 185, 129]);
+    doc.setTextColor(...colors.accentSuccess);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Focus Areas for Development', 20, y + 10);
 
-    // Cognitive Performance
-    doc.setFontSize(16);
-    doc.setTextColor(0);
-    doc.text('Cognitive Performance', 20, y);
-    y += 10;
+    doc.setTextColor(...colors.textSecondary);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    const focusAreas = generateCounselorFocusAreas(hexacoResults.percentages || {});
+    const focusText = focusAreas.length > 0
+      ? focusAreas.map(a => `[${a.priority}] ${a.area}: ${a.concern}`).join('\n')
+      : 'No significant concerns identified based on this assessment.';
+    const focusLines = doc.splitTextToSize(focusText, pageWidth - 45);
+    doc.text(focusLines.slice(0, 4), 20, y + 18);
 
-    doc.setFontSize(11);
-    doc.text(`Non-Verbal Reasoning: ${nvScore}/${nonVerbalQuestions.length} (${nvPercent}%)`, 20, y);
-    y += 7;
-    doc.text(`Verbal Reasoning: ${vScore}/${totalV} (${vPercent}%)`, 20, y);
-    y += 7;
-    doc.text(`Overall Cognitive Score: ${cognitiveAvg}%`, 20, y);
-    y += 15;
+    // Footer on all pages - Add page numbers
+    const totalPages = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setTextColor(...colors.textMuted);
+      doc.setFontSize(8);
+      doc.text(`LExam Assessment Battery • Page ${i} of ${totalPages}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
 
-    // Summary
-    doc.setFontSize(14);
-    doc.setTextColor(0);
-    doc.text('Profile Summary', 20, y);
-    y += 8;
-    doc.setFontSize(11);
-    doc.setTextColor(80);
-    const summary = generatePersonalitySummary(hexacoResults.percentages || {});
-    const summaryLines = doc.splitTextToSize(summary, pageWidth - 40);
-    doc.text(summaryLines, 20, y);
+      // Bottom accent bar
+      doc.setFillColor(...colors.accentSecondary);
+      doc.rect(0, pageHeight - 4, pageWidth * 0.4, 4, 'F');
+      doc.setFillColor(...colors.accentPrimary);
+      doc.rect(pageWidth * 0.4, pageHeight - 4, pageWidth * 0.6, 4, 'F');
+    }
 
     doc.save(`LExam_Results_${userData.name.replace(/\s+/g, '_')}.pdf`);
   };
@@ -931,6 +1439,42 @@ function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, u
         </div>
       </div>
 
+      {/* Section Timing Summary */}
+      {Object.keys(sectionTimings).length > 0 && (
+        <div className="timing-section">
+          <h2 className="section-title">Assessment Timing Summary</h2>
+          <p className="section-subtitle">Time taken per section — Total: {formatTime(totalTestTime)}</p>
+          <div className="timing-grid">
+            {[
+              { key: 'hexaco', label: 'HEXACO Personality', limit: null },
+              { key: 'persona', label: 'Cognitive Style', limit: null },
+              { key: 'nonVerbal', label: 'Non-Verbal Reasoning', limit: testTimeLimits.nonVerbal },
+              { key: 'verbal', label: 'Verbal Reasoning', limit: testTimeLimits.verbal }
+            ].map(sec => {
+              const t = sectionTimings[sec.key];
+              if (!t) return null;
+              return (
+                <div key={sec.key} className={`timing-card ${t.timedOut ? 'timed-out' : ''}`}>
+                  <div className="timing-card-header">
+                    <span className="timing-label">{sec.label}</span>
+                    {t.timedOut && <span className="timeout-badge">TIMED OUT</span>}
+                  </div>
+                  <div className="timing-value">{formatTime(t.elapsed)}</div>
+                  {sec.limit && (
+                    <div className="timing-detail">
+                      {t.questionsAnswered !== undefined
+                        ? `${t.questionsAnswered} / ${t.totalQuestions} answered`
+                        : `Limit: ${formatTime(sec.limit)}`}
+                    </div>
+                  )}
+                  {!sec.limit && <div className="timing-detail">Untimed section</div>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Comprehensive Summary Section */}
       <div className="summary-section detailed">
         <h2 className="section-title">Comprehensive Profile Summary</h2>
@@ -971,7 +1515,22 @@ function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, u
 
             <div className="counselor-note-card focus-areas">
               <h5>🎯 Focus Areas for Development</h5>
-              <p>{generateCounselorFocusAreas(hexacoResults.percentages || {})}</p>
+              {(() => {
+                const areas = generateCounselorFocusAreas(hexacoResults.percentages || {});
+                return areas.length > 0 ? (
+                  <ul className="focus-areas-list">
+                    {areas.map((area, idx) => (
+                      <li key={idx} className={`focus-area-item priority-${area.priority.toLowerCase()}`}>
+                        <span className="focus-area-badge">{area.priority}</span>
+                        <strong>{area.area}</strong>
+                        <p>{area.concern}</p>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="no-focus-areas">No significant concerns identified based on this assessment.</p>
+                );
+              })()}
             </div>
           </div>
         )}
@@ -1020,6 +1579,12 @@ const mockDevModeData = {
     'v4-q1': 'False', 'v4-q2': 'True', 'v4-q3': 'False',
     'v5-q1': 'False', 'v5-q2': 'True', 'v5-q3': 'Cannot Say',
     'v6-q1': 'False', 'v6-q2': 'True', 'v6-q3': 'False'
+  },
+  sectionTimings: {
+    hexaco: { elapsed: 485, timedOut: false },
+    persona: { elapsed: 142, timedOut: false },
+    nonVerbal: { elapsed: 720, timedOut: false, questionsAnswered: 20, totalQuestions: 20 },
+    verbal: { elapsed: 480, timedOut: false, questionsAnswered: 20, totalQuestions: 20 }
   }
 };
 
@@ -1036,6 +1601,11 @@ function App() {
   const isDevMode = checkDevMode();
   const [phase, setPhase] = useState(isDevMode ? 'results' : 'landing');
   const [userData, setUserData] = useState(isDevMode ? mockDevModeData.userData : { name: '', email: '', photo: null });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+
+  // Generate unique session ID
+  const sessionId = useRef(Math.random().toString(36).substr(2, 9).toUpperCase());
 
   // Results Storage
   const [hexacoAnswers, setHexacoAnswers] = useState({});
@@ -1044,6 +1614,25 @@ function App() {
   const [vAnswers, setVAnswers] = useState(isDevMode ? mockDevModeData.vAnswers : {});
 
   const [hexacoCalculated, setHexacoCalculated] = useState(isDevMode ? mockDevModeData.hexacoResults : { percentages: {} });
+
+  // Section timing tracking
+  const [sectionTimings, setSectionTimings] = useState(isDevMode ? mockDevModeData.sectionTimings : {});
+  const phaseStartTime = useRef(null);
+
+  // Record section start time when phase changes
+  useEffect(() => {
+    if (['test-hexaco', 'test-persona', 'test-nonverbal', 'test-verbal'].includes(phase)) {
+      phaseStartTime.current = Date.now();
+    }
+  }, [phase]);
+
+  const recordSectionTiming = (section, extra = {}) => {
+    const elapsed = phaseStartTime.current ? Math.round((Date.now() - phaseStartTime.current) / 1000) : 0;
+    setSectionTimings(prev => ({
+      ...prev,
+      [section]: { elapsed, timedOut: false, ...extra }
+    }));
+  };
 
   const calculateHexaco = () => {
     // Basic calculation logic reused
@@ -1069,8 +1658,100 @@ function App() {
       percentages[trait] = Math.round((scores[trait] / (counts[trait] * 5)) * 100);
     });
     setHexacoCalculated({ percentages });
+    return percentages;
   };
 
+  // Calculate cognitive scores
+  const calculateCognitiveScores = () => {
+    let nvScore = 0;
+    Object.keys(nvAnswers).forEach(idx => {
+      if (nonVerbalQuestions[idx]?.correctAnswer === nvAnswers[idx]) nvScore++;
+    });
+
+    let vScore = 0;
+    let totalV = 0;
+    verbalQuestions.forEach(p => {
+      p.questions.forEach(q => {
+        totalV++;
+        if (vAnswers[q.id] === q.correctAnswer) vScore++;
+      });
+    });
+
+    return {
+      nvScore,
+      nvTotal: nonVerbalQuestions.length,
+      vScore,
+      vTotal: totalV,
+      cognitiveAvg: Math.round(((nvScore / nonVerbalQuestions.length) + (vScore / totalV)) / 2 * 100)
+    };
+  };
+
+  // Get primary archetype from persona answers
+  const getPrimaryArchetype = () => {
+    const typeCounts = {};
+    personaAnswers.forEach(r => {
+      if (r) {
+        typeCounts[r.type] = (typeCounts[r.type] || 0) + r.score;
+      }
+    });
+    return Object.keys(typeCounts).reduce((a, b) => typeCounts[a] > typeCounts[b] ? a : b, 'Generalist');
+  };
+
+  // Submit results to Supabase
+  const handleSubmitResults = async () => {
+    if (isDevMode) return; // Don't submit in dev mode
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // Upload photo if exists
+      let photoUrl = null;
+      if (userData.photo) {
+        photoUrl = await uploadPhoto(userData.photo, sessionId.current);
+      }
+
+      // Calculate scores
+      const cogScores = calculateCognitiveScores();
+      const archetype = getPrimaryArchetype();
+
+      // Prepare test data
+      const testData = {
+        session_id: sessionId.current,
+        candidate_name: userData.name,
+        candidate_email: userData.email,
+        photo_url: photoUrl,
+        hexaco_percentages: hexacoCalculated.percentages,
+        persona_answers: personaAnswers,
+        nv_score: cogScores.nvScore,
+        nv_total: cogScores.nvTotal,
+        nv_answers: nvAnswers,
+        v_score: cogScores.vScore,
+        v_total: cogScores.vTotal,
+        v_answers: vAnswers,
+        cognitive_average: cogScores.cognitiveAvg,
+        primary_archetype: archetype
+      };
+
+      const result = await submitTestResults(testData);
+
+      if (!result.success) {
+        console.error('Failed to submit results:', result.error);
+        setSubmitError('Results saved locally. Online sync pending.');
+      }
+    } catch (err) {
+      console.error('Submit error:', err);
+      setSubmitError('Results saved locally. Online sync pending.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Handle completion and submit
+  const handleTestComplete = async () => {
+    await handleSubmitResults();
+    setPhase('results');
+  };
 
   return (
     <div className="app-container">
@@ -1099,6 +1780,7 @@ function App() {
         onAnswer={(qId, val) => setHexacoAnswers({ ...hexacoAnswers, [qId]: val })}
         onClose={() => {
           calculateHexaco();
+          recordSectionTiming('hexaco');
           setPhase('test-persona');
         }}
       />}
@@ -1110,22 +1792,54 @@ function App() {
           newAns[idx] = val;
           setPersonaAnswers(newAns);
         }}
-        onComplete={() => setPhase('test-nonverbal')}
+        onComplete={() => {
+          recordSectionTiming('persona');
+          setPhase('test-nonverbal');
+        }}
       />}
 
       {phase === 'test-nonverbal' && <NonVerbalTest
         answers={nvAnswers}
         onAnswer={(idx, val) => setNvAnswers({ ...nvAnswers, [idx]: val })}
-        onComplete={() => setPhase('test-verbal')}
+        onComplete={(info = {}) => {
+          const elapsed = phaseStartTime.current ? Math.round((Date.now() - phaseStartTime.current) / 1000) : 0;
+          setSectionTimings(prev => ({
+            ...prev,
+            nonVerbal: {
+              elapsed,
+              timedOut: info.timedOut || false,
+              questionsAnswered: info.questionsAnswered || Object.keys(nvAnswers).length,
+              totalQuestions: nonVerbalQuestions.length
+            }
+          }));
+          setPhase('test-verbal');
+        }}
       />}
 
       {phase === 'test-verbal' && <VerbalTest
         answers={vAnswers}
         onAnswer={(qId, val) => setVAnswers({ ...vAnswers, [qId]: val })}
-        onComplete={() => setPhase('completion')}
+        onComplete={(info = {}) => {
+          const elapsed = phaseStartTime.current ? Math.round((Date.now() - phaseStartTime.current) / 1000) : 0;
+          let totalVQ = 0;
+          verbalQuestions.forEach(p => p.questions.forEach(() => totalVQ++));
+          setSectionTimings(prev => ({
+            ...prev,
+            verbal: {
+              elapsed,
+              timedOut: info.timedOut || false,
+              questionsAnswered: info.questionsAnswered || Object.keys(vAnswers).length,
+              totalQuestions: totalVQ
+            }
+          }));
+          setPhase('completion');
+        }}
       />}
 
-      {phase === 'completion' && <CompletionModal onShowResults={() => setPhase('results')} />}
+      {phase === 'completion' && <CompletionModal
+        onShowResults={handleTestComplete}
+        isSubmitting={isSubmitting}
+      />}
 
       {phase === 'results' && <GamifiedResults
         hexacoResults={hexacoCalculated}
@@ -1133,6 +1847,9 @@ function App() {
         nvResults={nvAnswers}
         vResults={vAnswers}
         userData={userData}
+        sessionId={sessionId.current}
+        submitError={submitError}
+        sectionTimings={sectionTimings}
       />}
 
     </div>

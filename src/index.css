@@ -972,18 +972,253 @@ p {
   border-radius: 2px;
 }
 
+.mini-shape.triangle {
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 12px solid #000;
+}
+
+/* Fill box variations - clear solid block fills */
+.fill-box {
+  overflow: hidden;
+  position: relative;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
 .fill-box.full {
-  background: #000;
+  background: #1a1a2e;
 }
 
 .fill-box.half {
-  background: linear-gradient(to right, #000 50%, rgba(255, 255, 255, 0.9) 50%);
+  background: linear-gradient(to right, #1a1a2e 50%, rgba(255, 255, 255, 0.9) 50%);
 }
 
-.fill-box.empty {
+.fill-box.empty,
+.fill-box.none {
   background: rgba(255, 255, 255, 0.9);
-  border: 2px solid #000;
 }
+
+.fill-box.start {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.fill-box.start::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 33.33%;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+.fill-box.center {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.fill-box.center::after {
+  content: '';
+  position: absolute;
+  left: 33.33%;
+  top: 0;
+  width: 33.34%;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+.fill-box.end {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.fill-box.end::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 33.33%;
+  height: 100%;
+  background: #1a1a2e;
+}
+
+/* Question category badge */
+.question-category {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(124, 124, 240, 0.15);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Passage header styling */
+.passage-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.topic-badge {
+  padding: 4px 12px;
+  background: rgba(0, 217, 255, 0.15);
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile Responsiveness Improvements */
+@media (max-width: 576px) {
+  .section {
+    padding: 1rem;
+  }
+
+  .sequence-row {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .sequence-item {
+    width: 50px;
+    height: 50px;
+  }
+
+  .shape-box {
+    width: 40px;
+    height: 40px;
+  }
+
+  .shape-option-btn {
+    padding: 10px;
+  }
+
+  .options-row {
+    gap: 10px;
+  }
+
+  .options-scale {
+    gap: 8px;
+  }
+
+  .scale-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+  }
+
+  .binary-options {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .binary-option-btn {
+    padding: 20px 16px;
+  }
+
+  .split-screen {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .passage-pane {
+    position: relative;
+    top: 0;
+  }
+
+  .test-header.with-timer {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .timer-container {
+    align-self: center;
+  }
+
+  .results-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .archetype-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .archetype-icon-large {
+    font-size: 3.5rem;
+  }
+
+  .archetype-title {
+    font-size: 1.75rem;
+  }
+
+  .hexaco-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cognitive-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cog-score-big {
+    font-size: 2.25rem;
+  }
+}
+
+/* Timed test header layout */
+.test-header.with-timer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-left {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Timed test notice */
+.timed-test-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.notice-icon {
+  font-size: 1.25rem;
+}
+
+/* Count label for large numbers */
+.count-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #000;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+}
+
 
 /* --- Verbal Test --- */
 .verbal-layout {
@@ -1936,10 +2171,7 @@ p {
   border-radius: 0;
 }
 
-/* Full fill for box */
-.fill-box.full {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-}
+/* Full fill for box - uses main definition above */
 
 /* Responsive adjustments for timer */
 @media (max-width: 640px) {
@@ -2155,6 +2387,94 @@ p {
   color: var(--text-secondary);
 }
 
+/* Section Timing Summary */
+.timing-section {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.timing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.timing-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.timing-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.timing-card.timed-out {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(239, 68, 68, 0.02));
+}
+
+.timing-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.timing-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timeout-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.5px;
+}
+
+.timing-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.timing-card.timed-out .timing-value {
+  color: #ef4444;
+}
+
+.timing-detail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .timing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .timing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Counselor Notes Section */
 .counselor-section {
   width: 100%;
@@ -2271,4 +2591,81 @@ p {
   .archetype-traits {
     justify-content: center;
   }
+}
+
+/* Focus Areas List */
+.focus-areas-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.focus-area-item {
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--text-muted);
+}
+
+.focus-area-item.priority-high {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.focus-area-item.priority-moderate {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.focus-area-item.priority-low {
+  border-left-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.focus-area-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.priority-high .focus-area-badge {
+  background: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.priority-moderate .focus-area-badge {
+  background: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+.priority-low .focus-area-badge {
+  background: rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.focus-area-item strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.focus-area-item p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.no-focus-areas {
+  color: var(--text-muted);
+  font-style: italic;
 }
