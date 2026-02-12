@@ -27,8 +27,8 @@
 
   /* Text */
   --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.85);
-  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --text-muted: rgba(255, 255, 255, 0.9);
 
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, #7C7CF0 0%, #00D9FF 100%);
