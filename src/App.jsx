@@ -1203,18 +1203,74 @@ function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, u
     ? `M ${radarPoints.map(p => `${p.x},${p.y}`).join(' L ')} Z`
     : '';
 
+  // Download results as JSON file
+  const downloadResultsData = () => {
+    const cogScores = (() => {
+      let nvScore = 0;
+      Object.keys(nvResults).forEach(idx => {
+        if (nonVerbalQuestions[idx]?.correctAnswer === nvResults[idx]) nvScore++;
+      });
+      let vScore = 0, totalV = 0;
+      verbalQuestions.forEach(p => {
+        p.questions.forEach(q => {
+          totalV++;
+          if (vResults[q.id] === q.correctAnswer) vScore++;
+        });
+      });
+      return { nvScore, nvTotal: nonVerbalQuestions.length, vScore, vTotal: totalV };
+    })();
+
+    const resultsData = {
+      exportDate: new Date().toISOString(),
+      sessionId: candidateId.current,
+      candidate: {
+        name: userData.name || 'N/A',
+        email: userData.email || 'N/A'
+      },
+      hexacoScores: hexacoResults.percentages || {},
+      cognitiveScores: cogScores,
+      primaryArchetype: archetype,
+      sectionTimings: sectionTimings,
+      answers: {
+        hexaco: 'See percentages above',
+        persona: personaResults,
+        nonVerbal: nvResults,
+        verbal: vResults
+      }
+    };
+
+    const blob = new Blob([JSON.stringify(resultsData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `test-results-${candidateId.current}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="section results-section detailed-results">
       {/* Results Header with Prominent Photo */}
       <div className="results-header-new">
         <div className="results-title-row">
           <h1>Comprehensive Assessment <span className="gradient-text">Report</span></h1>
-          <button className="btn btn-primary download-btn" onClick={downloadPDF}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-            </svg>
-            Download PDF Report
-          </button>
+          <div className="download-buttons">
+            <button className="btn btn-primary download-btn" onClick={downloadPDF}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              Download PDF Report
+            </button>
+            <button className="btn btn-outline download-btn" onClick={downloadResultsData}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+              Download Data (JSON)
+            </button>
+          </div>
         </div>
 
         {/* Enhanced Candidate Card with Larger Photo */}
