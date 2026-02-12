@@ -861,107 +861,180 @@ p {
   line-height: 1.5;
 }
 
-/* --- Non-Verbal Test --- */
+/* --- Non-Verbal Test --- Premium Visual Design */
 .non-verbal-container {
-  max-width: 800px;
+  max-width: 860px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .instruction-text {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
+/* Sequence area — the pattern items */
 .sequence-row {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  margin-bottom: 40px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 24px 32px;
+  position: relative;
 }
 
 .sequence-item {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .sequence-item.placeholder {
-  background: rgba(124, 124, 240, 0.1);
-  border: 2px dashed var(--accent-primary);
+  background: rgba(124, 124, 240, 0.08);
+  border: 2.5px dashed rgba(124, 124, 240, 0.5);
   border-radius: var(--radius-md);
   font-size: 2rem;
   font-weight: 700;
   color: var(--accent-primary);
+  animation: placeholderPulse 2s ease-in-out infinite;
 }
 
+@keyframes placeholderPulse {
+
+  0%,
+  100% {
+    border-color: rgba(124, 124, 240, 0.3);
+  }
+
+  50% {
+    border-color: rgba(124, 124, 240, 0.7);
+  }
+}
+
+/* Divider arrow between sequence and options */
+.non-verbal-container .sequence-row+.options-row::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+}
+
+/* Options area */
 .options-row {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
+  padding: 8px 0;
 }
 
 .shape-option-btn {
-  background: var(--glass-surface);
-  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 14px;
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out-expo);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .shape-option-btn:hover {
+  border-color: rgba(124, 124, 240, 0.6);
+  background: rgba(124, 124, 240, 0.06);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(124, 124, 240, 0.15);
+}
+
+.shape-option-btn.selected {
   border-color: var(--accent-primary);
-  transform: scale(1.05);
+  background: rgba(124, 124, 240, 0.1);
+  box-shadow: 0 0 20px rgba(124, 124, 240, 0.25), inset 0 0 12px rgba(124, 124, 240, 0.05);
+  transform: translateY(-3px);
 }
 
 .opt-label {
   display: block;
   text-align: center;
-  margin-top: 8px;
-  font-weight: 600;
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 0.8rem;
   color: var(--text-muted);
+  letter-spacing: 0.5px;
 }
 
+.shape-option-btn.selected .opt-label {
+  color: var(--accent-primary);
+}
+
+/* Shape boxes — the main visual containers */
 .shape-box {
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: var(--radius-sm);
+  width: 72px;
+  height: 72px;
+  background: rgba(240, 240, 255, 0.92);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
 }
 
+/* Clock type — circular with visible hand */
 .clock-box {
   border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.95), rgba(230, 230, 245, 0.9));
+}
+
+.clock-box::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #2d2d5e;
+  border-radius: 50%;
+  z-index: 2;
 }
 
 .clock-hand {
-  width: 3px;
-  height: 50%;
-  background: #000;
+  width: 3.5px;
+  height: 45%;
+  background: linear-gradient(to top, #2d2d5e, #5555aa);
   position: absolute;
   bottom: 50%;
   transform-origin: bottom center;
-  border-radius: 2px;
+  border-radius: 3px;
+  z-index: 1;
 }
 
+/* Count type — shapes arranged in a grid */
 .count-box {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  padding: 8px;
+  gap: 5px;
+  padding: 10px;
+  align-content: center;
+  justify-content: center;
 }
 
 .mini-shape {
-  width: 12px;
-  height: 12px;
-  background: #000;
+  width: 14px;
+  height: 14px;
+  background: #2d2d5e;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .mini-shape.circle {
@@ -969,40 +1042,48 @@ p {
 }
 
 .mini-shape.square {
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 .mini-shape.triangle {
   width: 0;
   height: 0;
   background: transparent;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 12px solid #000;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 14px solid #2d2d5e;
+  box-shadow: none;
 }
 
-/* Fill box variations - clear solid block fills */
+.count-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #2d2d5e;
+  margin-left: 2px;
+}
+
+/* Fill box variations — clear solid block fills with high contrast */
 .fill-box {
   overflow: hidden;
   position: relative;
-  border: 2px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(0, 0, 0, 0.15);
 }
 
 .fill-box.full {
-  background: #1a1a2e;
+  background: #2d2d5e;
 }
 
 .fill-box.half {
-  background: linear-gradient(to right, #1a1a2e 50%, rgba(255, 255, 255, 0.9) 50%);
+  background: linear-gradient(to right, #2d2d5e 50%, rgba(240, 240, 255, 0.92) 50%);
 }
 
 .fill-box.empty,
 .fill-box.none {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(240, 240, 255, 0.92);
 }
 
 .fill-box.start {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(240, 240, 255, 0.92);
 }
 
 .fill-box.start::after {
@@ -1012,11 +1093,11 @@ p {
   top: 0;
   width: 33.33%;
   height: 100%;
-  background: #1a1a2e;
+  background: #2d2d5e;
 }
 
 .fill-box.center {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(240, 240, 255, 0.92);
 }
 
 .fill-box.center::after {
@@ -1026,11 +1107,11 @@ p {
   top: 0;
   width: 33.34%;
   height: 100%;
-  background: #1a1a2e;
+  background: #2d2d5e;
 }
 
 .fill-box.end {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(240, 240, 255, 0.92);
 }
 
 .fill-box.end::after {
@@ -1040,21 +1121,45 @@ p {
   top: 0;
   width: 33.33%;
   height: 100%;
-  background: #1a1a2e;
+  background: #2d2d5e;
 }
 
 /* Question category badge */
 .question-category {
   display: inline-block;
-  padding: 4px 12px;
-  background: rgba(124, 124, 240, 0.15);
+  padding: 5px 14px;
+  background: linear-gradient(135deg, rgba(124, 124, 240, 0.15), rgba(100, 200, 240, 0.1));
+  border: 1px solid rgba(124, 124, 240, 0.2);
   border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   color: var(--accent-primary);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+}
+
+/* Sequence item responsive */
+@media (max-width: 640px) {
+  .sequence-item {
+    width: 65px;
+    height: 65px;
+  }
+
+  .shape-box {
+    width: 55px;
+    height: 55px;
+  }
+
+  .sequence-row {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .mini-shape {
+    width: 10px;
+    height: 10px;
+  }
 }
 
 /* Passage header styling */
