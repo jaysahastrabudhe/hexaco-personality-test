@@ -948,6 +948,7 @@ p {
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  overflow: hidden;
 }
 
 .shape-option-btn:hover {
@@ -990,6 +991,7 @@ p {
   position: relative;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   border: 1.5px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
 /* Clock type — circular with visible hand */
@@ -1024,17 +1026,19 @@ p {
 .count-box {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  padding: 10px;
+  gap: 4px;
+  padding: 8px;
   align-content: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .mini-shape {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   background: #2d2d5e;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
 }
 
 .mini-shape.circle {
@@ -1049,9 +1053,9 @@ p {
   width: 0;
   height: 0;
   background: transparent;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-bottom: 14px solid #2d2d5e;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 12px solid #2d2d5e;
   box-shadow: none;
 }
 
