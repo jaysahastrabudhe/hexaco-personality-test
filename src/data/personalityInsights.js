@@ -56,10 +56,10 @@ export const traitAnalysis = {
                     "Not held back by excessive modesty"
                 ],
                 challenges: [
-                    "May be perceived as manipulative or self-serving by others",
-                    "Risk of ethical boundary violations under pressure",
-                    "Relationships may feel transactional to partners",
-                    "Could struggle with trust-building in close relationships"
+                    "Manipulation Risk",
+                    "Ethical Integrity",
+                    "Transactional Bias",
+                    "Trust Deficit"
                 ],
                 growthAreas: [
                     "Transparency",
@@ -78,10 +78,10 @@ export const traitAnalysis = {
                     "Appreciates material rewards and status"
                 ],
                 challenges: [
-                    "May overlook ethical nuances in favor of outcomes",
-                    "Others might question sincerity of intentions",
-                    "Could prioritize appearance over substance",
-                    "May struggle with humility in group settings"
+                    "Competitive Friction",
+                    "Sincerity Perception",
+                    "Surface Status",
+                    "Humility Resistance"
                 ],
                 growthAreas: [
                     "Peer Recognition",
@@ -100,10 +100,10 @@ export const traitAnalysis = {
                     "Reasonable level of self-promotion"
                 ],
                 challenges: [
-                    "May feel conflicted about self-advocacy",
-                    "Boundary between assertiveness and manipulation unclear",
-                    "Could struggle with consistency across contexts",
-                    "May need external guidance on ethical gray areas"
+                    "Self-Advocacy Conflict",
+                    "Boundaries Ambiguity",
+                    "Contextual Inconsistency",
+                    "Ethical Gray Areas"
                 ],
                 growthAreas: [
                     "Ethical Boundary Clarity",
@@ -122,10 +122,10 @@ export const traitAnalysis = {
                     "Comfortable with own status and possessions"
                 ],
                 challenges: [
-                    "May be taken advantage of by less scrupulous individuals",
-                    "Could undersell accomplishments professionally",
-                    "Might struggle in highly competitive environments",
-                    "May find it difficult to engage in necessary self-promotion"
+                    "Exploitation Risk",
+                    "Value Underestimation",
+                    "Competition Struggle",
+                    "Self-Promotion Barrier"
                 ],
                 growthAreas: [
                     "Self-Advocacy",
@@ -145,11 +145,11 @@ export const traitAnalysis = {
                     "Natural ethical leadership"
                 ],
                 challenges: [
-                    "May be naive about others' manipulative behaviors",
-                    "Could significantly undersell abilities and achievements",
-                    "Might struggle in environments requiring aggressive self-promotion",
-                    "May miss opportunities due to excessive humility",
-                    "Could be perceived as passive or unambitious"
+                    "Manipulation Blindness",
+                    "Achievement Suppression",
+                    "Promotion Difficulty",
+                    "Missed Opportunities",
+                    "Passive Perception"
                 ],
                 growthAreas: [
                     "Honest Advocacy",
@@ -194,11 +194,11 @@ export const traitAnalysis = {
                     "Can remain calm when others panic"
                 ],
                 challenges: [
-                    "May appear cold or unfeeling to others",
-                    "Could miss important danger signals",
-                    "Might struggle to provide emotional support to others",
-                    "Relationships may lack emotional depth",
-                    "May underestimate psychological risks"
+                    "Emotional Coldness",
+                    "Risk Signal Blindness",
+                    "Support Resistance",
+                    "Emotional Surface",
+                    "Psychological Naivety"
                 ],
                 growthAreas: [
                     "Vulnerability Practice",
@@ -218,10 +218,10 @@ export const traitAnalysis = {
                     "Stable emotional baseline"
                 ],
                 challenges: [
-                    "May dismiss emotional needs of self and others",
-                    "Could struggle with emotional intimacy",
-                    "Might not recognize when help is needed",
-                    "May be perceived as emotionally unavailable"
+                    "Needs Dismissal",
+                    "Dependency Resistance",
+                    "Connection Barrier",
+                    "Emotional Distance"
                 ],
                 growthAreas: [
                     "Vulnerability Comfort",
@@ -240,9 +240,9 @@ export const traitAnalysis = {
                     "Forms appropriate emotional bonds"
                 ],
                 challenges: [
-                    "May sometimes overreact or underreact to situations",
-                    "Could struggle to gauge appropriate emotional response",
-                    "Might feel torn between independence and connection"
+                    "Response Imbalance",
+                    "Scale Calibration",
+                    "Internal Tension"
                 ],
                 growthAreas: [
                     "Pattern Awareness",
@@ -261,10 +261,10 @@ export const traitAnalysis = {
                     "Attuned to emotional needs of self and others"
                 ],
                 challenges: [
-                    "May experience excessive worry",
-                    "Could become overly dependent on others",
-                    "Might avoid situations perceived as dangerous",
-                    "Strong emotions could impair decision-making"
+                    "Excessive Worry",
+                    "Over-Dependence",
+                    "Avoidance Bias",
+                    "Decision Impairment"
                 ],
                 growthAreas: [
                     "Uncertainty Tolerance",
@@ -283,11 +283,11 @@ export const traitAnalysis = {
                     "Highly aware of risks and safety concerns"
                 ],
                 challenges: [
-                    "Overwhelming anxiety or fear may be debilitating",
-                    "High dependence on others could strain relationships",
-                    "May avoid many situations due to perceived risk",
-                    "Intense emotions may impair daily functioning",
-                    "Vulnerable to separation distress"
+                    "Worry Overload",
+                    "Relationship Strain",
+                    "Risk-Aversion",
+                    "Functional Impairment",
+                    "Separation Distress"
                 ],
                 growthAreas: [
                     "Anxiety Management",
@@ -332,11 +332,11 @@ export const traitAnalysis = {
                     "May excel in writing or solo creative work"
                 ],
                 challenges: [
-                    "May experience social isolation",
-                    "Low social self-esteem could impact opportunities",
-                    "Might avoid networking crucial for career",
-                    "Could be perceived as unfriendly or disinterested",
-                    "May miss out on collaborative opportunities"
+                    "Social Isolation",
+                    "Impactful Self-Esteem",
+                    "Networking Avoidance",
+                    "Disinterest Perception",
+                    "Collaborative Gaps"
                 ],
                 growthAreas: [
                     "Social Interaction",
@@ -356,10 +356,10 @@ export const traitAnalysis = {
                     "Good listener"
                 ],
                 challenges: [
-                    "May miss opportunities requiring visibility",
-                    "Could feel drained by required social events",
-                    "Might be overlooked for leadership roles",
-                    "May struggle with initiating relationships"
+                    "Visibility Deficiency",
+                    "Social Exhaustion",
+                    "Leadership Oversight",
+                    "Initiation Struggle"
                 ],
                 growthAreas: [
                     "Social Strategy",
@@ -378,9 +378,9 @@ export const traitAnalysis = {
                     "Adaptable to different social demands"
                 ],
                 challenges: [
-                    "May feel pulled between different social needs",
-                    "Could struggle to identify optimal social level",
-                    "Might overextend or under-engage periodically"
+                    "Social Fluidity",
+                    "Engagement Balance",
+                    "Energy Volatility"
                 ],
                 growthAreas: [
                     "Social Balance",
@@ -399,10 +399,10 @@ export const traitAnalysis = {
                     "Creates energy and momentum in teams"
                 ],
                 challenges: [
-                    "May struggle with prolonged solitude",
-                    "Could dominate conversations inadvertently",
-                    "Might make decisions too quickly for social approval",
-                    "May not understand introverts' needs"
+                    "Solitude Sensitivity",
+                    "Conversation Dominance",
+                    "Approval Impulsivity",
+                    "Introvert Friction"
                 ],
                 growthAreas: [
                     "Active Listening",
@@ -422,11 +422,11 @@ export const traitAnalysis = {
                     "Comfortable taking social risks"
                 ],
                 challenges: [
-                    "May find solitude very uncomfortable",
-                    "Could have difficulty with introspection",
-                    "Risk of burnout from over-scheduling socially",
-                    "May be impulsive in seeking stimulation",
-                    "Might struggle in roles requiring quiet focus"
+                    "Solitude Discomfort",
+                    "Introspection Deficit",
+                    "Social Overload",
+                    "Impulsive Stimulation",
+                    "Quiet-Focus Struggle"
                 ],
                 growthAreas: [
                     "Stillness Mastery",
@@ -471,11 +471,11 @@ export const traitAnalysis = {
                     "Direct and honest feedback"
                 ],
                 challenges: [
-                    "May create significant interpersonal conflict",
-                    "Holding grudges could impair relationships and wellbeing",
-                    "Could be perceived as hostile or aggressive",
-                    "Difficulty working collaboratively in teams",
-                    "Anger may lead to regrettable actions"
+                    "Interpersonal Conflict",
+                    "Grudge Accumulation",
+                    "Hostile Perception",
+                    "Collaborative Difficulty",
+                    "Impulsive Anger"
                 ],
                 growthAreas: [
                     "Anger Management",
@@ -495,10 +495,10 @@ export const traitAnalysis = {
                     "Not a pushover"
                 ],
                 challenges: [
-                    "May escalate minor conflicts",
-                    "Could have trouble maintaining harmonious relationships",
-                    "Might be perceived as difficult to work with",
-                    "Resentment may accumulate over time"
+                    "Conflict Escalation",
+                    "Relational Disharmony",
+                    "Abrasive Perception",
+                    "Resentment Build-Up"
                 ],
                 growthAreas: [
                     "Battle Selection",
@@ -517,9 +517,9 @@ export const traitAnalysis = {
                     "Generally patient but can express displeasure"
                 ],
                 challenges: [
-                    "May feel conflicted in adversarial situations",
-                    "Could struggle to find right balance in conflicts",
-                    "Might be inconsistent across relationships"
+                    "Adversarial Conflict",
+                    "Conflict Calibration",
+                    "Relational Inconsistency"
                 ],
                 growthAreas: [
                     "Boundary Clarity",
@@ -538,10 +538,10 @@ export const traitAnalysis = {
                     "Good at de-escalating conflicts"
                 ],
                 challenges: [
-                    "May not advocate sufficiently for own needs",
-                    "Could tolerate mistreatment too long",
-                    "Might avoid necessary conflict",
-                    "May be taken advantage of by others"
+                    "Need Suppression",
+                    "Mistreatment Tolerance",
+                    "Conflict Avoidance",
+                    "Social Exploitation"
                 ],
                 growthAreas: [
                     "Needs Assertion",
@@ -561,11 +561,11 @@ export const traitAnalysis = {
                     "Natural peacemaker and mediator"
                 ],
                 challenges: [
-                    "May significantly suppress own needs and feelings",
-                    "High risk of being exploited",
-                    "Could stay in harmful relationships indefinitely",
-                    "Avoiding conflict may allow problems to fester",
-                    "May struggle to protect self or dependents"
+                    "Extreme Suppression",
+                    "Exploitation Vulnerability",
+                    "Relational Retention",
+                    "Problem Festering",
+                    "Protective Deficit"
                 ],
                 growthAreas: [
                     "Assertion Mastery",
@@ -611,11 +611,11 @@ export const traitAnalysis = {
                     "May excel in creative or unpredictable environments"
                 ],
                 challenges: [
-                    "May frequently miss deadlines or commitments",
-                    "Disorganization could significantly impair functioning",
-                    "Impulsive decisions may have negative consequences",
-                    "Others may perceive as unreliable",
-                    "Long-term goals may be difficult to achieve"
+                    "Deadline Reliability",
+                    "Disorganization Risk",
+                    "Impulsive Decisions",
+                    "Reliability Perception",
+                    "Goal Completion"
                 ],
                 growthAreas: [
                     "Organisational Systems",
@@ -634,10 +634,10 @@ export const traitAnalysis = {
                     "Can improvise effectively"
                 ],
                 challenges: [
-                    "May struggle with detailed or long-term projects",
-                    "Could be perceived as careless or unreliable",
-                    "Might make impulsive decisions",
-                    "May underperform in structured environments"
+                    "Project Management",
+                    "Professional Carelessness",
+                    "Impulsive Decisions",
+                    "Structure Resistance"
                 ],
                 growthAreas: [
                     "Optimal Structure",
@@ -656,9 +656,9 @@ export const traitAnalysis = {
                     "Adapts structure to context"
                 ],
                 challenges: [
-                    "May not consistently meet high organizational standards",
-                    "Could occasionally miss details or act impulsively",
-                    "Might struggle in highly rigid environments"
+                    "Standard Consistency",
+                    "Detail Oversight",
+                    "Rigidity Tension"
                 ],
                 growthAreas: [
                     "Targeted Structure",
@@ -677,10 +677,10 @@ export const traitAnalysis = {
                     "Achieves long-term goals effectively"
                 ],
                 challenges: [
-                    "May struggle with unpredictable situations",
-                    "Could be perceived as rigid or inflexible",
-                    "Might have difficulty relaxing or being spontaneous",
-                    "Could experience distress when things are disorganized"
+                    "Unpredictability Unrest",
+                    "Rigidity Risk",
+                    "Relaxation Difficulty",
+                    "Disorder Distress"
                 ],
                 growthAreas: [
                     "Adaptive Flexibility",
@@ -700,11 +700,11 @@ export const traitAnalysis = {
                     "Highly disciplined and self-controlled"
                 ],
                 challenges: [
-                    "Perfectionism may be debilitating",
-                    "Could experience significant distress from disorder",
-                    "May struggle to delegate or trust others' work",
-                    "Risk of burnout from overwork",
-                    "May be perceived as controlling or critical"
+                    "Debilitating Perfectionism",
+                    "Disorder Distress",
+                    "Delegation Resistance",
+                    "Burnout Risk",
+                    "Critical Perception"
                 ],
                 growthAreas: [
                     "Pragmatic Quality",
@@ -750,11 +750,11 @@ export const traitAnalysis = {
                     "Good at maintaining stable systems"
                 ],
                 challenges: [
-                    "May resist beneficial changes",
-                    "Could struggle to understand different perspectives",
-                    "Might miss creative solutions to problems",
-                    "May be perceived as closed-minded",
-                    "Difficulty adapting to changing environments"
+                    "Change Resistance",
+                    "Perspective Limitation",
+                    "Creative Blindness",
+                    "Routine Stagnation",
+                    "Adaptability Deficit"
                 ],
                 growthAreas: [
                     "Novelty Exploration",
@@ -773,10 +773,10 @@ export const traitAnalysis = {
                     "Values tried-and-true methods"
                 ],
                 challenges: [
-                    "May have narrow range of interests",
-                    "Could be resistant to new ideas",
-                    "Might struggle in creative roles",
-                    "May not appreciate others' creative work"
+                    "Abstract Frustration",
+                    "Aesthetic Indifference",
+                    "Diversity Friction",
+                    "Creative Disconnection"
                 ],
                 growthAreas: [
                     "Monthly Novelty",
@@ -795,9 +795,9 @@ export const traitAnalysis = {
                     "Selective curiosity"
                 ],
                 challenges: [
-                    "May feel pulled between stability and exploration",
-                    "Could be inconsistent in openness across domains",
-                    "Might miss opportunities in highly creative or traditional environments"
+                    "Stability-Exploration Conflict",
+                    "Domain Inconsistency",
+                    "Environmental Mismatch"
                 ],
                 growthAreas: [
                     "Domain Awareness",
@@ -816,10 +816,10 @@ export const traitAnalysis = {
                     "Creative problem-solver"
                 ],
                 challenges: [
-                    "May struggle with routine or conventional roles",
-                    "Could be perceived as impractical or dreamy",
-                    "Might have difficulty with highly structured environments",
-                    "May overlook practical constraints"
+                    "Routine Frustration",
+                    "Practical Perception",
+                    "Structure Discomfort",
+                    "Constraint Oversight"
                 ],
                 growthAreas: [
                     "Practical Creativity",
@@ -839,11 +839,11 @@ export const traitAnalysis = {
                     "Natural innovator and visionary"
                 ],
                 challenges: [
-                    "May strongly resist routine and convention",
-                    "Could be perceived as eccentric or impractical",
-                    "Might struggle significantly in conventional roles",
-                    "May overvalue novelty at expense of stability",
-                    "Could have difficulty with mundane responsibilities"
+                    "Routine Resistance",
+                    "Eccentric Perception",
+                    "Conventional Struggle",
+                    "Novelty Over-Valuation",
+                    "Mundane Difficulty"
                 ],
                 growthAreas: [
                     "Practical Systems",

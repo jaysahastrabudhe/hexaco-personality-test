@@ -1068,7 +1068,7 @@ function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, u
         doc.setTextColor(...colors.accentWarning);
         doc.setFontSize(7);
         doc.setFont('helvetica', 'bold');
-        doc.text('Potential Challenges:', 20, y);
+        doc.text('Areas of Improvement:', 20, y);
         doc.setTextColor(...colors.textSecondary);
         doc.setFont('helvetica', 'normal');
         interp.challenges.slice(0, 2).forEach((c, i) => {
@@ -1428,7 +1428,7 @@ function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, u
                         </div>
 
                         <div className="trait-list challenges">
-                          <h5>⚠️ Potential Challenges</h5>
+                          <h5>⚠️ Areas of Improvement</h5>
                           <ul>
                             {interp.challenges?.map((c, i) => <li key={i}>{c}</li>)}
                           </ul>
