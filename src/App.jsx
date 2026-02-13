@@ -1068,13 +1068,26 @@ function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, u
         doc.setTextColor(...colors.accentWarning);
         doc.setFontSize(7);
         doc.setFont('helvetica', 'bold');
-        doc.text('Growth Areas:', 20, y);
+        doc.text('Potential Challenges:', 20, y);
         doc.setTextColor(...colors.textSecondary);
         doc.setFont('helvetica', 'normal');
         interp.challenges.slice(0, 2).forEach((c, i) => {
           doc.text(`• ${c}`, 25, y + 4 + i * 4);
         });
-        y += 16;
+        y += 14;
+      }
+
+      // Growth Opportunities (Keywords)
+      if (interp?.growthAreas && interp.growthAreas.length > 0) {
+        doc.setTextColor(...colors.accentSuccess);
+        doc.setFontSize(7);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Growth Opportunities:', 20, y);
+        doc.setTextColor(...colors.textSecondary);
+        doc.setFont('helvetica', 'normal');
+        const keywords = interp.growthAreas.join(', ');
+        doc.text(keywords, 25, y + 4);
+        y += 10;
       }
     });
 

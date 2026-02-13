@@ -62,10 +62,10 @@ export const traitAnalysis = {
                     "Could struggle with trust-building in close relationships"
                 ],
                 growthAreas: [
-                    "Practice transparency even when it's not advantageous",
-                    "Reflect on the long-term costs of short-term gains",
-                    "Consider how others' success can benefit you indirectly",
-                    "Develop genuine interest in others beyond utility"
+                    "Transparency",
+                    "Ethical Reflection",
+                    "Success Redefinition",
+                    "Authentic Interest"
                 ],
                 counselorNotes: "Client may benefit from exploring values clarification exercises. Consider potential for workplace ethics concerns or relationship conflicts stemming from perceived manipulation. Assess for potential narcissistic tendencies if combined with high Extraversion. May need support in developing authentic relationships."
             },
@@ -84,10 +84,10 @@ export const traitAnalysis = {
                     "May struggle with humility in group settings"
                 ],
                 growthAreas: [
-                    "Practice acknowledging others' contributions",
-                    "Consider the ethical implications of decisions",
-                    "Build relationships without immediate expectations",
-                    "Develop comfort with admitting mistakes"
+                    "Peer Recognition",
+                    "Ethical Consciousness",
+                    "Expectation Management",
+                    "Self-Accountability"
                 ],
                 counselorNotes: "Explore client's early experiences with achievement and recognition. May benefit from discussions about authentic self-esteem versus external validation. Consider impact on romantic and professional relationships."
             },
@@ -106,10 +106,10 @@ export const traitAnalysis = {
                     "May need external guidance on ethical gray areas"
                 ],
                 growthAreas: [
-                    "Clarify personal ethical boundaries",
-                    "Develop consistent principles for decision-making",
-                    "Reflect on when flexibility becomes compromise",
-                    "Build awareness of impact on others"
+                    "Ethical Boundary Clarity",
+                    "Decision Principles",
+                    "Impact Reflection",
+                    "Social Awareness"
                 ],
                 counselorNotes: "Client shows adaptive flexibility but may benefit from values clarification work. Explore any areas where ethical ambiguity causes stress or decision-making difficulty."
             },
@@ -128,10 +128,10 @@ export const traitAnalysis = {
                     "May find it difficult to engage in necessary self-promotion"
                 ],
                 growthAreas: [
-                    "Learn to advocate for yourself appropriately",
-                    "Recognize when others aren't reciprocating honesty",
-                    "Develop comfort with healthy competition",
-                    "Practice articulating your value and achievements"
+                    "Self-Advocacy",
+                    "Reciprocity Awareness",
+                    "Healthy Competition",
+                    "Value Articulation"
                 ],
                 counselorNotes: "Client demonstrates strong ethical foundation. May need support in competitive environments or negotiations. Explore any patterns of being exploited and develop protective boundaries while maintaining values."
             },
@@ -152,10 +152,10 @@ export const traitAnalysis = {
                     "Could be perceived as passive or unambitious"
                 ],
                 growthAreas: [
-                    "Recognize that self-advocacy isn't dishonesty",
-                    "Learn to identify when others aren't being genuine",
-                    "Practice accepting recognition and praise",
-                    "Understand that some competition is healthy"
+                    "Honest Advocacy",
+                    "Sincerity Detection",
+                    "Praise Acceptance",
+                    "Contextual Awareness"
                 ],
                 counselorNotes: "Client exhibits exceptionally high integrity which is a significant strength. However, assess for potential exploitation by others or career stagnation due to inadequate self-promotion. May benefit from assertiveness training while maintaining values. Explore family of origin messages about pride, success, and self-worth."
             }
@@ -201,10 +201,10 @@ export const traitAnalysis = {
                     "May underestimate psychological risks"
                 ],
                 growthAreas: [
-                    "Practice recognizing and expressing vulnerable emotions",
-                    "Learn to accept support from others occasionally",
-                    "Develop empathy through perspective-taking exercises",
-                    "Reflect on the value of emotional connections"
+                    "Vulnerability Practice",
+                    "Support Acceptance",
+                    "Perspective-Taking",
+                    "Emotional Bond Value"
                 ],
                 counselorNotes: "Assess for emotional suppression or alexithymia. Client may have difficulty identifying emotions, which could impact relationships and decision-making. Explore early attachment patterns and any trauma history that may have led to emotional detachment. Consider impact on romantic relationships especially."
             },
@@ -224,10 +224,10 @@ export const traitAnalysis = {
                     "May be perceived as emotionally unavailable"
                 ],
                 growthAreas: [
-                    "Practice vulnerability in safe relationships",
-                    "Develop emotional vocabulary",
-                    "Learn to recognize subtle emotional cues in others",
-                    "Consider the value of interdependence"
+                    "Vulnerability Comfort",
+                    "Emotional Vocabulary",
+                    "Social Cue Detection",
+                    "Interdependence Value"
                 ],
                 counselorNotes: "Client likely presents as composed and self-reliant. Explore relationship satisfaction and whether partners express concerns about emotional availability. May benefit from emotional awareness exercises."
             },
@@ -245,9 +245,9 @@ export const traitAnalysis = {
                     "Might feel torn between independence and connection"
                 ],
                 growthAreas: [
-                    "Develop awareness of emotional patterns",
-                    "Practice emotional regulation strategies",
-                    "Learn to communicate emotional needs clearly"
+                    "Pattern Awareness",
+                    "Regulation Strategies",
+                    "Clear Communication"
                 ],
                 counselorNotes: "Client shows adaptive emotional functioning. Explore any specific contexts where emotions feel dysregulated or where they struggle to connect with emotional experience."
             },
@@ -267,10 +267,10 @@ export const traitAnalysis = {
                     "Strong emotions could impair decision-making"
                 ],
                 growthAreas: [
-                    "Practice tolerating uncertainty",
-                    "Develop independent coping strategies",
-                    "Learn to distinguish realistic from excessive worry",
-                    "Build confidence in handling challenges alone"
+                    "Uncertainty Tolerance",
+                    "Coping Independence",
+                    "Realistic Assessment",
+                    "Self-Reliance Confidence"
                 ],
                 counselorNotes: "Client may present with anxiety symptoms or relationship dependency. Assess for anxiety disorders if worry is significantly impairing. Explore attachment style and work on developing secure independence alongside meaningful connection."
             },
@@ -290,10 +290,10 @@ export const traitAnalysis = {
                     "Vulnerable to separation distress"
                 ],
                 growthAreas: [
-                    "Develop anxiety management and grounding techniques",
-                    "Practice gradual exposure to feared situations",
-                    "Build self-soothing and independent coping skills",
-                    "Work on emotional regulation strategies"
+                    "Anxiety Management",
+                    "Gradual Exposure",
+                    "Coping Self-Reliance",
+                    "Regulation Mastery"
                 ],
                 counselorNotes: "Client may meet criteria for anxiety disorder—conduct thorough assessment. High dependence suggests possible attachment anxiety. Explore trauma history and early attachment experiences. Consider CBT or ACT interventions for anxiety. May benefit from gradual independence-building while maintaining supportive relationships."
             }
@@ -339,10 +339,10 @@ export const traitAnalysis = {
                     "May miss out on collaborative opportunities"
                 ],
                 growthAreas: [
-                    "Practice low-stakes social interactions",
-                    "Challenge negative self-talk about social worth",
-                    "Identify one or two meaningful relationships to nurture",
-                    "Find communities around specific interests"
+                    "Social Interaction",
+                    "Self-Talk Reframing",
+                    "Relationship Nurturing",
+                    "Interest-Based Community"
                 ],
                 counselorNotes: "Assess for social anxiety disorder, depression, or avoidant personality features. Explore self-esteem and any history of social rejection or bullying. Consider whether client desires more connection or is content with current social level. If distressed, social skills training and cognitive restructuring may help."
             },
@@ -362,10 +362,10 @@ export const traitAnalysis = {
                     "May struggle with initiating relationships"
                 ],
                 growthAreas: [
-                    "Develop strategies for necessary social situations",
-                    "Practice self-promotion in comfortable ways",
-                    "Build a small but supportive social network",
-                    "Communicate needs clearly in relationships"
+                    "Social Strategy",
+                    "Self-Promotion",
+                    "Support Network",
+                    "Needs Communication"
                 ],
                 counselorNotes: "Introversion itself is not pathological. Explore whether client is satisfied with social life or desires change. If distressed by social limitations, work on gentle exposure and skill-building. Consider occupational fit with current or desired roles."
             },
@@ -383,9 +383,9 @@ export const traitAnalysis = {
                     "Might overextend or under-engage periodically"
                 ],
                 growthAreas: [
-                    "Identify personal optimal social balance",
-                    "Communicate needs to others proactively",
-                    "Recognize energy patterns and plan accordingly"
+                    "Social Balance",
+                    "Proactive Needs",
+                    "Energy Awareness"
                 ],
                 counselorNotes: "Client shows adaptive social flexibility. Explore any specific contexts where social functioning feels challenging or where there's a disconnect between desired and actual social engagement."
             },
@@ -405,10 +405,10 @@ export const traitAnalysis = {
                     "May not understand introverts' needs"
                 ],
                 growthAreas: [
-                    "Practice active listening and making space for others",
-                    "Develop comfort with solitude and reflection",
-                    "Be mindful of quieter voices in groups",
-                    "Consider depth alongside breadth in relationships"
+                    "Active Listening",
+                    "Solitude Comfort",
+                    "Inclusivity Awareness",
+                    "Relationship Depth"
                 ],
                 counselorNotes: "Client likely presents as engaging and personable. Explore relationship quality and whether connections feel meaningful. Consider impact on more introverted family members or colleagues. May benefit from reflective practices and deeper self-exploration."
             },
@@ -429,10 +429,10 @@ export const traitAnalysis = {
                     "Might struggle in roles requiring quiet focus"
                 ],
                 growthAreas: [
-                    "Develop comfort with stillness and solitude",
-                    "Practice deep listening without planning responses",
-                    "Build capacity for focused, independent work",
-                    "Reflect on whether activity serves genuine needs"
+                    "Stillness Mastery",
+                    "Deep Listening",
+                    "Focused Work",
+                    "Needs Reflection"
                 ],
                 counselorNotes: "Assess for impulsivity or stimulation-seeking that could be problematic. Explore depth of relationships versus quantity. Consider whether high social activity serves genuine connection or avoidance of uncomfortable internal experiences. May benefit from mindfulness practices."
             }
@@ -478,11 +478,11 @@ export const traitAnalysis = {
                     "Anger may lead to regrettable actions"
                 ],
                 growthAreas: [
-                    "Practice anger management techniques",
-                    "Explore the costs of holding grudges",
-                    "Learn to express criticism constructively",
-                    "Consider others' perspectives before judging",
-                    "Work on forgiveness practices"
+                    "Anger Management",
+                    "Grudge Cost Reflection",
+                    "Constructive Criticism",
+                    "Perspective-Taking",
+                    "Forgiveness Practice"
                 ],
                 counselorNotes: "Assess for anger management issues or intermittent explosive features. Explore relationship history and patterns of conflict. Consider impact on occupational functioning if in collaborative roles. May benefit from anger management intervention and exploring underlying hurt or fear. Assess for trauma that may underlie hostility."
             },
@@ -501,10 +501,10 @@ export const traitAnalysis = {
                     "Resentment may accumulate over time"
                 ],
                 growthAreas: [
-                    "Practice picking battles wisely",
-                    "Explore what triggers critical responses",
-                    "Work on expressing needs without blame",
-                    "Consider compassion for others' limitations"
+                    "Battle Selection",
+                    "Trigger Awareness",
+                    "Need Expression",
+                    "Compassion Practice"
                 ],
                 counselorNotes: "Explore relationship patterns and workplace conflicts. Consider whether low agreeableness is protective response to past hurt. May benefit from communication skills training and exploration of anger triggers."
             },
@@ -522,9 +522,9 @@ export const traitAnalysis = {
                     "Might be inconsistent across relationships"
                 ],
                 growthAreas: [
-                    "Clarify personal boundaries and non-negotiables",
-                    "Develop clear framework for when to assert vs. accommodate",
-                    "Practice consistency across different relationships"
+                    "Boundary Clarity",
+                    "Assertion Framework",
+                    "Relationship Consistency"
                 ],
                 counselorNotes: "Client shows adaptive flexibility in relationships. Explore any specific relationships or contexts where balance feels difficult to achieve."
             },
@@ -544,10 +544,10 @@ export const traitAnalysis = {
                     "May be taken advantage of by others"
                 ],
                 growthAreas: [
-                    "Practice asserting needs and boundaries",
-                    "Recognize when forgiveness enables harmful behavior",
-                    "Learn to engage in healthy conflict",
-                    "Develop comfort with others' temporary displeasure"
+                    "Needs Assertion",
+                    "Boundary Setting",
+                    "Healthy Conflict",
+                    "Displeasure Tolerance"
                 ],
                 counselorNotes: "Explore whether high agreeableness leads to unmet needs or exploitation. Assess for patterns of staying in unhealthy relationships. May benefit from assertiveness training while maintaining cooperative orientation."
             },
@@ -568,11 +568,11 @@ export const traitAnalysis = {
                     "May struggle to protect self or dependents"
                 ],
                 growthAreas: [
-                    "Learn that assertiveness isn't aggression",
-                    "Practice expressing displeasure safely",
-                    "Recognize when forgiveness becomes enabling",
-                    "Develop skills for healthy confrontation",
-                    "Work on valuing own needs equally"
+                    "Assertion Mastery",
+                    "Displeasure Expression",
+                    "Enabling Awareness",
+                    "Confrontation Skills",
+                    "Self-Valuation"
                 ],
                 counselorNotes: "Assess carefully for history of exploitation, abuse, or unhealthy relationships. High agreeableness combined with other factors may indicate people-pleasing that harms the client. Explore family of origin dynamics around conflict and assertion. Assertiveness training essential; may need support recognizing and leaving harmful situations."
             }
@@ -618,10 +618,10 @@ export const traitAnalysis = {
                     "Long-term goals may be difficult to achieve"
                 ],
                 growthAreas: [
-                    "Develop basic organizational systems",
-                    "Practice pausing before major decisions",
-                    "Set small, achievable goals to build momentum",
-                    "Use external accountability structures"
+                    "Organisational Systems",
+                    "Deliberate Pausing",
+                    "Incremental Goals",
+                    "Accountability Structures"
                 ],
                 counselorNotes: "Assess for ADHD or other conditions affecting executive function. Explore impact on work, relationships, and life goals. May benefit from concrete skill-building in organization and planning. Consider whether this reflects temperament or a pattern that causes significant impairment requiring intervention."
             },
@@ -640,10 +640,10 @@ export const traitAnalysis = {
                     "May underperform in structured environments"
                 ],
                 growthAreas: [
-                    "Identify minimum necessary structure for success",
-                    "Develop habits around key responsibilities",
-                    "Practice deliberation on important decisions",
-                    "Find roles that value flexibility"
+                    "Optimal Structure",
+                    "Habit Formation",
+                    "Prudent Deliberation",
+                    "Role Alignment"
                 ],
                 counselorNotes: "Explore whether low conscientiousness causes impairment or distress. Consider occupational fit and relationship impacts. May benefit from coaching on organizational skills if this is causing problems."
             },
@@ -661,9 +661,9 @@ export const traitAnalysis = {
                     "Might struggle in highly rigid environments"
                 ],
                 growthAreas: [
-                    "Identify contexts where more structure would help",
-                    "Develop awareness of when flexibility becomes avoidance",
-                    "Build consistent habits for recurring responsibilities"
+                    "Targeted Structure",
+                    "Avoidance Awareness",
+                    "Consistent Habits"
                 ],
                 counselorNotes: "Client shows adaptive flexibility. Explore specific contexts where organization or impulse control is challenging and work on targeted strategies."
             },
@@ -683,10 +683,10 @@ export const traitAnalysis = {
                     "Could experience distress when things are disorganized"
                 ],
                 growthAreas: [
-                    "Practice flexibility and adapting to change",
-                    "Allow some tasks to be 'good enough'",
-                    "Develop comfort with spontaneity",
-                    "Learn to tolerate others' different approaches"
+                    "Adaptive Flexibility",
+                    "Pragmatic Completion",
+                    "Spontaneity Practice",
+                    "Diverse Tolerance"
                 ],
                 counselorNotes: "High conscientiousness is generally adaptive. Explore whether rigidity or perfectionism causes stress or relationship conflict. May need support accepting imperfection and developing flexibility."
             },
@@ -707,11 +707,11 @@ export const traitAnalysis = {
                     "May be perceived as controlling or critical"
                 ],
                 growthAreas: [
-                    "Practice accepting 'good enough'",
-                    "Develop tolerance for disorder and imperfection",
-                    "Learn to delegate and trust others",
-                    "Prioritize self-care and relaxation",
-                    "Recognize perfectionism's costs"
+                    "Pragmatic Quality",
+                    "Imperfection Tolerance",
+                    "Delegation Trust",
+                    "Rest Prioritisation",
+                    "Cost Awareness"
                 ],
                 counselorNotes: "Assess for OCPD features, workaholism, or anxiety-driven perfectionism. Explore impact on relationships, especially with less conscientious family members. Consider stress levels and work-life balance. May benefit from cognitive work on perfectionism and relaxation training."
             }
@@ -757,10 +757,10 @@ export const traitAnalysis = {
                     "Difficulty adapting to changing environments"
                 ],
                 growthAreas: [
-                    "Explore one new interest or hobby",
-                    "Practice considering alternative viewpoints",
-                    "Engage with art or nature periodically",
-                    "Read or learn about unfamiliar topics"
+                    "Novelty Exploration",
+                    "Alternative Perspectives",
+                    "Aesthetic Engagement",
+                    "Knowledge Expansion"
                 ],
                 counselorNotes: "Very low openness is not pathological but may limit adaptability. Explore whether client's environment requires more flexibility than they can comfortably provide. Consider impact on relationships with highly open partners or family members. May struggle in rapidly changing work environments."
             },
@@ -779,10 +779,10 @@ export const traitAnalysis = {
                     "May not appreciate others' creative work"
                 ],
                 growthAreas: [
-                    "Try one new experience each month",
-                    "Listen to perspectives different from your own",
-                    "Consider what value creativity adds to life",
-                    "Explore nature or arts in accessible ways"
+                    "Monthly Novelty",
+                    "Diverse Perspectives",
+                    "Creative Value",
+                    "Aesthetic Exploration"
                 ],
                 counselorNotes: "Explore client's satisfaction with their range of experiences. Consider whether low openness creates conflict in relationships or work. May benefit from gentle encouragement to broaden experiences if distressed by limitations."
             },
@@ -800,9 +800,9 @@ export const traitAnalysis = {
                     "Might miss opportunities in highly creative or traditional environments"
                 ],
                 growthAreas: [
-                    "Identify areas where more openness or grounding would help",
-                    "Develop self-awareness about preferences across domains",
-                    "Communicate needs in relationships and work"
+                    "Domain Awareness",
+                    "Preference Clarity",
+                    "Need Communication"
                 ],
                 counselorNotes: "Client shows adaptive flexibility. Explore whether there are specific domains where openness or conventionality creates challenges."
             },
@@ -822,10 +822,10 @@ export const traitAnalysis = {
                     "May overlook practical constraints"
                 ],
                 growthAreas: [
-                    "Balance creativity with practical execution",
-                    "Develop tolerance for necessary routines",
-                    "Consider others' comfort with conventionality",
-                    "Ground abstract ideas in concrete action"
+                    "Practical Creativity",
+                    "Routine Tolerance",
+                    "Social Adaptability",
+                    "Concrete Action"
                 ],
                 counselorNotes: "High openness is generally adaptive and associated with creativity and psychological growth. Explore whether client experiences friction with more conventional contexts. Consider career fit and relationship dynamics with less open partners."
             },
@@ -846,10 +846,10 @@ export const traitAnalysis = {
                     "Could have difficulty with mundane responsibilities"
                 ],
                 growthAreas: [
-                    "Develop systems to handle practical necessities",
-                    "Consider when convention serves valid purposes",
-                    "Balance novelty-seeking with commitment",
-                    "Ground visionary ideas in achievable steps"
+                    "Practical Systems",
+                    "Conventional Value",
+                    "Commitment Balance",
+                    "Achievable Steps"
                 ],
                 counselorNotes: "Very high openness can be associated with artistic and intellectual achievement but also with challenges in conventional settings. Explore career and relationship fit. Consider whether client is content with unconventional lifestyle or if it creates problems. May be associated with interest in altered states of consciousness or spiritual/philosophical exploration—explore any risks in this area."
             }
