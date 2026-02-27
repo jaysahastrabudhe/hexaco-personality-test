@@ -58,42 +58,20 @@ function Timer({ totalSeconds, onTimeUp, isRunning = true }) {
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  const progress = (timeLeft / totalSeconds) * 100;
 
-  // Warning states
-  const isWarning = timeLeft <= 120 && timeLeft > 30; // Yellow: 2 min
-  const isCritical = timeLeft <= 30; // Red: 30 sec
+  const isWarning = timeLeft <= 120 && timeLeft > 30;
+  const isCritical = timeLeft <= 30;
 
   return (
-    <div className={`timer-container ${isWarning ? 'warning' : ''} ${isCritical ? 'critical' : ''}`}>
-      <div className="timer-circle">
-        <svg viewBox="0 0 100 100">
-          <circle
-            className="timer-bg"
-            cx="50" cy="50" r="45"
-            fill="none"
-            strokeWidth="8"
-          />
-          <circle
-            className="timer-progress"
-            cx="50" cy="50" r="45"
-            fill="none"
-            strokeWidth="8"
-            strokeDasharray={`${progress * 2.83} 283`}
-            transform="rotate(-90 50 50)"
-          />
-        </svg>
-        <div className="timer-text">
-          <span className="timer-digits">
-            {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-          </span>
-          <span className="timer-label">remaining</span>
-        </div>
-      </div>
-      {isCritical && <div className="timer-warning-text">⚠️ Time almost up!</div>}
+    <div className={`timer-badge ${isWarning ? 'warning' : ''} ${isCritical ? 'critical' : ''}`}>
+      <span className="timer-icon">⏱</span>
+      <span className="timer-digits">
+        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+      </span>
     </div>
   );
 }
+
 
 // 1. Landing Screen
 function LandingScreen({ onStart }) {
