@@ -370,6 +370,9 @@ function NonVerbalTest({ answers, onAnswer, onComplete }) {
 
   const q = nonVerbalQuestions[currentQ];
 
+  // Shape icons for count display
+  const shapeIcon = { circle: '●', square: '■', triangle: '▲' };
+
   // Helper to render shapes based on type
   const renderShape = (shapeConfig) => {
     if (shapeConfig.type === 'clock-line') {
@@ -380,16 +383,26 @@ function NonVerbalTest({ answers, onAnswer, onComplete }) {
       );
     }
     if (shapeConfig.type === 'shapes-count') {
-      // Limit display to max 10 for visual clarity
-      const displayCount = Math.min(shapeConfig.count, 10);
-      return (
-        <div className="shape-box count-box">
-          {Array.from({ length: displayCount }).map((_, i) => (
-            <div key={i} className={`mini-shape ${shapeConfig.shape}`}></div>
-          ))}
-          {shapeConfig.count > 10 && <span className="count-label">×{shapeConfig.count}</span>}
-        </div>
-      );
+      const count = shapeConfig.count;
+      const shape = shapeConfig.shape;
+      // For small counts (≤6): show actual dots for visual clarity
+      // For large counts (>6): show bold number + shape icon — unambiguous even on mobile
+      if (count <= 6) {
+        return (
+          <div className="shape-box count-box">
+            {Array.from({ length: count }).map((_, i) => (
+              <div key={i} className={`mini-shape ${shape}`}></div>
+            ))}
+          </div>
+        );
+      } else {
+        return (
+          <div className="shape-box count-box count-box-numeric">
+            <span className="count-number">{count}</span>
+            <span className="count-shape-icon">{shapeIcon[shape] || '●'}</span>
+          </div>
+        );
+      }
     }
     if (shapeConfig.type === 'box-fill') {
       return <div className={`shape-box fill-box ${shapeConfig.fill}`}></div>;

@@ -1328,6 +1328,35 @@ p {
   right: 2px;
 }
 
+/* Numeric count display for counts > 6 */
+.count-box-numeric {
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px;
+}
+
+.count-number {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #2d2d5e;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.count-shape-icon {
+  font-size: 0.65rem;
+  color: #2d2d5e;
+  opacity: 0.7;
+  line-height: 1;
+}
+
+/* Responsive: keep numbers readable on small screens */
+@media (max-width: 576px) {
+  .count-number {
+    font-size: 1rem;
+  }
+}
+
 
 /* --- Verbal Test --- */
 .verbal-layout {
