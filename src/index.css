@@ -1066,66 +1066,267 @@ p {
   margin-left: 2px;
 }
 
-/* Fill box variations — clear solid block fills with high contrast */
+/* ============================================
+   ABSTRACT REASONING — Text Series UI (SHL style)
+   ============================================ */
+.series-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 24px 16px;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Horizontal row of term pills */
+.series-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.series-term {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  min-height: 54px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(124, 124, 240, 0.35);
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #e0e0ff;
+  letter-spacing: 1px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Pulsating question mark placeholder */
+.series-placeholder {
+  background: rgba(124, 124, 240, 0.12);
+  border: 2px dashed rgba(124, 124, 240, 0.6);
+  color: rgba(124, 124, 240, 0.9);
+  animation: pulse-glow 1.6s ease-in-out infinite;
+  font-size: 1.5rem;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 6px rgba(124, 124, 240, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 18px rgba(124, 124, 240, 0.8);
+    border-color: rgba(124, 124, 240, 1);
+  }
+}
+
+/* Answer options 2×2 grid */
+.series-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.series-opt-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.series-opt-btn:hover {
+  background: rgba(124, 124, 240, 0.15);
+  border-color: rgba(124, 124, 240, 0.5);
+  transform: translateY(-2px);
+}
+
+.series-opt-btn.selected {
+  background: rgba(124, 124, 240, 0.25);
+  border-color: rgba(124, 124, 240, 0.9);
+  box-shadow: 0 0 16px rgba(124, 124, 240, 0.3);
+}
+
+.series-opt-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  background: rgba(124, 124, 240, 0.2);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(124, 124, 240, 0.9);
+  font-family: inherit;
+}
+
+.series-opt-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #e0e0ff;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+/* ============================================
+   VERBAL REASONING — Single-question layout (Watson-Glaser style)
+   ============================================ */
+.verbal-single-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.verbal-passage-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.passage-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(124, 124, 240, 0.7);
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+
+.verbal-question-card {
+  background: rgba(124, 124, 240, 0.07);
+  border: 1.5px solid rgba(124, 124, 240, 0.25);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.verbal-question-card .vq-prompt {
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: #d0d0ee;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Large True / False / Cannot Say buttons */
+.vq-options-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.vq-btn-large {
+  flex: 1;
+  min-width: 100px;
+  padding: 14px 10px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #c0c0e0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vq-btn-large:hover {
+  border-color: rgba(124, 124, 240, 0.6);
+  background: rgba(124, 124, 240, 0.15);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.vq-btn-large.selected {
+  border-color: rgba(124, 124, 240, 0.9);
+  background: rgba(124, 124, 240, 0.3);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(124, 124, 240, 0.35);
+}
+
+/* ============================================
+   (Legacy shape CSS kept below — no longer used in NV test)
+   ============================================ */
+
+/* Fill box variations — dramatically distinct visual patterns for each state */
 .fill-box {
+
   overflow: hidden;
   position: relative;
   border: 2px solid rgba(0, 0, 0, 0.15);
+  background: rgba(240, 240, 255, 0.92);
 }
 
+/* FULL: entire box filled dark */
 .fill-box.full {
   background: #2d2d5e;
 }
 
-.fill-box.half {
-  background: linear-gradient(to right, #2d2d5e 50%, rgba(240, 240, 255, 0.92) 50%);
-}
-
+/* NONE/EMPTY: entirely white/light — no fill */
 .fill-box.empty,
 .fill-box.none {
   background: rgba(240, 240, 255, 0.92);
 }
 
-.fill-box.start {
-  background: rgba(240, 240, 255, 0.92);
-}
-
+/* START: bold left HALF filled */
 .fill-box.start::after {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
-  width: 33.33%;
+  width: 50%;
   height: 100%;
   background: #2d2d5e;
 }
 
-.fill-box.center {
-  background: rgba(240, 240, 255, 0.92);
-}
-
-.fill-box.center::after {
-  content: '';
-  position: absolute;
-  left: 33.33%;
-  top: 0;
-  width: 33.34%;
-  height: 100%;
-  background: #2d2d5e;
-}
-
-.fill-box.end {
-  background: rgba(240, 240, 255, 0.92);
-}
-
+/* END: bold right HALF filled */
 .fill-box.end::after {
   content: '';
   position: absolute;
   right: 0;
   top: 0;
-  width: 33.33%;
+  width: 50%;
   height: 100%;
   background: #2d2d5e;
+}
+
+/* CENTER: thick horizontal band across the MIDDLE (top+bottom thirds are light) */
+.fill-box.center::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  width: 100%;
+  height: 50%;
+  background: #2d2d5e;
+}
+
+/* HALF (legacy): left-right diagonal split */
+.fill-box.half {
+  background: linear-gradient(to right, #2d2d5e 50%, rgba(240, 240, 255, 0.92) 50%);
 }
 
 /* Question category badge */

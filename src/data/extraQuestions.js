@@ -127,391 +127,192 @@ export const personaQuestions = [
 ];
 
 // ============================================
-// NON-VERBAL REASONING - 12 Questions (15 min)
+// NON-VERBAL REASONING - 20 Questions (15 min)
+// Text-based logical series — SHL / Korn Ferry style
 // ============================================
 export const nonVerbalQuestions = [
-    // Pattern 1: Rotation (45° clockwise)
+    // 1. Simple doubling
     {
         id: 'nv1',
-        description: "Select the figure that logically completes the series.",
-        category: 'Rotation',
-        sequence: [
-            { type: 'clock-line', rotation: 0 },
-            { type: 'clock-line', rotation: 45 },
-            { type: 'clock-line', rotation: 90 },
-            { type: 'clock-line', rotation: 135 }
-        ],
-        options: [
-            { id: 'A', type: 'clock-line', rotation: 135 },
-            { id: 'B', type: 'clock-line', rotation: 180 },
-            { id: 'C', type: 'clock-line', rotation: 225 },
-            { id: 'D', type: 'clock-line', rotation: 270 }
-        ],
-        correctAnswer: 'B'
+        category: 'Number Series',
+        description: 'What number comes next in the series?',
+        sequence: ['2', '4', '8', '16', '?'],
+        options: [{ id: 'A', value: '24' }, { id: 'B', value: '18' }, { id: 'C', value: '32' }, { id: 'D', value: '20' }],
+        correctAnswer: 'C'
     },
-    // Pattern 2: Addition (count increases by 1)
+    // 2. Letter series (+3 each)
     {
         id: 'nv2',
-        description: "Which shape comes next in the sequence?",
-        category: 'Counting',
-        sequence: [
-            { type: 'shapes-count', count: 1, shape: 'circle' },
-            { type: 'shapes-count', count: 2, shape: 'circle' },
-            { type: 'shapes-count', count: 3, shape: 'circle' },
-            { type: 'shapes-count', count: 4, shape: 'circle' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 4, shape: 'circle' },
-            { id: 'B', type: 'shapes-count', count: 5, shape: 'square' },
-            { id: 'C', type: 'shapes-count', count: 5, shape: 'circle' },
-            { id: 'D', type: 'shapes-count', count: 3, shape: 'circle' }
-        ],
+        category: 'Letter Series',
+        description: 'Which letter continues the sequence?',
+        sequence: ['A', 'D', 'G', 'J', '?'],
+        options: [{ id: 'A', value: 'K' }, { id: 'B', value: 'L' }, { id: 'C', value: 'M' }, { id: 'D', value: 'N' }],
         correctAnswer: 'C'
     },
-    // Pattern 3: Alternation
+    // 3. Odd-increment series (+1, +2, +3, +4...)
     {
         id: 'nv3',
-        description: "Identify the pattern and choose the next figure.",
-        category: 'Alternation',
-        sequence: [
-            { type: 'box-fill', fill: 'start' },
-            { type: 'box-fill', fill: 'end' },
-            { type: 'box-fill', fill: 'start' },
-            { type: 'box-fill', fill: 'end' }
-        ],
-        options: [
-            { id: 'A', type: 'box-fill', fill: 'end' },
-            { id: 'B', type: 'box-fill', fill: 'start' },
-            { id: 'C', type: 'box-fill', fill: 'none' },
-            { id: 'D', type: 'box-fill', fill: 'center' }
-        ],
-        correctAnswer: 'B'
+        category: 'Number Series',
+        description: 'What number comes next in the series?',
+        sequence: ['1', '2', '4', '7', '11', '?'],
+        options: [{ id: 'A', value: '14' }, { id: 'B', value: '15' }, { id: 'C', value: '16' }, { id: 'D', value: '17' }],
+        correctAnswer: 'C'
     },
-    // Pattern 4: Rotation (90° counter-clockwise)
+    // 4. Alternating number-letter
     {
         id: 'nv4',
-        description: "What comes next in this rotation sequence?",
-        category: 'Rotation',
-        sequence: [
-            { type: 'clock-line', rotation: 0 },
-            { type: 'clock-line', rotation: 270 },
-            { type: 'clock-line', rotation: 180 },
-            { type: 'clock-line', rotation: 90 }
-        ],
-        options: [
-            { id: 'A', type: 'clock-line', rotation: 45 },
-            { id: 'B', type: 'clock-line', rotation: 0 },
-            { id: 'C', type: 'clock-line', rotation: 315 },
-            { id: 'D', type: 'clock-line', rotation: 270 }
-        ],
-        correctAnswer: 'B'
+        category: 'Alternating',
+        description: 'What comes next in this alternating sequence?',
+        sequence: ['1', 'A', '2', 'B', '3', '?'],
+        options: [{ id: 'A', value: 'C' }, { id: 'B', value: 'D' }, { id: 'C', value: '4' }, { id: 'D', value: 'E' }],
+        correctAnswer: 'A'
     },
-    // Pattern 5: Decreasing count
+    // 5. Fibonacci
     {
         id: 'nv5',
-        description: "Complete the decreasing pattern.",
-        category: 'Counting',
-        sequence: [
-            { type: 'shapes-count', count: 5, shape: 'square' },
-            { type: 'shapes-count', count: 4, shape: 'square' },
-            { type: 'shapes-count', count: 3, shape: 'square' },
-            { type: 'shapes-count', count: 2, shape: 'square' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 2, shape: 'square' },
-            { id: 'B', type: 'shapes-count', count: 0, shape: 'square' },
-            { id: 'C', type: 'shapes-count', count: 1, shape: 'square' },
-            { id: 'D', type: 'shapes-count', count: 3, shape: 'square' }
-        ],
-        correctAnswer: 'C'
+        category: 'Number Series',
+        description: 'Each number is the sum of the previous two. What comes next?',
+        sequence: ['1', '1', '2', '3', '5', '?'],
+        options: [{ id: 'A', value: '7' }, { id: 'B', value: '8' }, { id: 'C', value: '9' }, { id: 'D', value: '10' }],
+        correctAnswer: 'B'
     },
-    // Pattern 6: Shape transformation
+    // 6. Mixed code pattern
     {
         id: 'nv6',
-        description: "What pattern do you see? Select the next item.",
-        category: 'Transformation',
-        sequence: [
-            { type: 'shapes-count', count: 1, shape: 'circle' },
-            { type: 'shapes-count', count: 1, shape: 'square' },
-            { type: 'shapes-count', count: 1, shape: 'triangle' },
-            { type: 'shapes-count', count: 1, shape: 'circle' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 1, shape: 'circle' },
-            { id: 'B', type: 'shapes-count', count: 1, shape: 'square' },
-            { id: 'C', type: 'shapes-count', count: 1, shape: 'triangle' },
-            { id: 'D', type: 'shapes-count', count: 2, shape: 'circle' }
-        ],
+        category: 'Mixed Series',
+        description: 'Which code continues the pattern?',
+        sequence: ['AB1', 'CD2', 'EF3', '?'],
+        options: [{ id: 'A', value: 'GH3' }, { id: 'B', value: 'GH4' }, { id: 'C', value: 'IJ4' }, { id: 'D', value: 'HI4' }],
         correctAnswer: 'B'
     },
-    // Pattern 7: Fill progression
+    // 7. Tripling series
     {
         id: 'nv7',
-        description: "Identify the fill pattern completion.",
-        category: 'Progression',
-        sequence: [
-            { type: 'box-fill', fill: 'none' },
-            { type: 'box-fill', fill: 'start' },
-            { type: 'box-fill', fill: 'center' },
-            { type: 'box-fill', fill: 'end' }
-        ],
-        options: [
-            { id: 'A', type: 'box-fill', fill: 'full' },
-            { id: 'B', type: 'box-fill', fill: 'none' },
-            { id: 'C', type: 'box-fill', fill: 'start' },
-            { id: 'D', type: 'box-fill', fill: 'center' }
-        ],
-        correctAnswer: 'A'
+        category: 'Number Series',
+        description: 'What number comes next in the series?',
+        sequence: ['2', '6', '18', '54', '?'],
+        options: [{ id: 'A', value: '108' }, { id: 'B', value: '144' }, { id: 'C', value: '162' }, { id: 'D', value: '180' }],
+        correctAnswer: 'C'
     },
-    // Pattern 8: Rotation with increment
+    // 8. Reverse letter series (−2 each)
     {
         id: 'nv8',
-        description: "The angle increases each step. What comes next?",
-        category: 'Rotation',
-        sequence: [
-            { type: 'clock-line', rotation: 0 },
-            { type: 'clock-line', rotation: 30 },
-            { type: 'clock-line', rotation: 60 },
-            { type: 'clock-line', rotation: 90 }
-        ],
-        options: [
-            { id: 'A', type: 'clock-line', rotation: 100 },
-            { id: 'B', type: 'clock-line', rotation: 120 },
-            { id: 'C', type: 'clock-line', rotation: 90 },
-            { id: 'D', type: 'clock-line', rotation: 150 }
-        ],
+        category: 'Letter Series',
+        description: 'Which letter continues the sequence?',
+        sequence: ['Z', 'X', 'V', 'T', '?'],
+        options: [{ id: 'A', value: 'S' }, { id: 'B', value: 'R' }, { id: 'C', value: 'Q' }, { id: 'D', value: 'P' }],
         correctAnswer: 'B'
     },
-    // Pattern 9: Double count increase
+    // 9. Squares series
     {
         id: 'nv9',
-        description: "The count doubles each time. What's next?",
-        category: 'Counting',
-        sequence: [
-            { type: 'shapes-count', count: 1, shape: 'triangle' },
-            { type: 'shapes-count', count: 2, shape: 'triangle' },
-            { type: 'shapes-count', count: 4, shape: 'triangle' },
-            { type: 'shapes-count', count: 8, shape: 'triangle' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 10, shape: 'triangle' },
-            { id: 'B', type: 'shapes-count', count: 12, shape: 'triangle' },
-            { id: 'C', type: 'shapes-count', count: 16, shape: 'triangle' },
-            { id: 'D', type: 'shapes-count', count: 9, shape: 'triangle' }
-        ],
+        category: 'Number Series',
+        description: 'What number comes next in the series?',
+        sequence: ['1', '4', '9', '16', '25', '?'],
+        options: [{ id: 'A', value: '30' }, { id: 'B', value: '35' }, { id: 'C', value: '36' }, { id: 'D', value: '49' }],
         correctAnswer: 'C'
     },
-    // Pattern 10: Alternating with progression
+    // 10. Alternating +/- pattern
     {
         id: 'nv10',
-        description: "Find the pattern in this alternating sequence.",
-        category: 'Alternation',
-        sequence: [
-            { type: 'box-fill', fill: 'start' },
-            { type: 'box-fill', fill: 'none' },
-            { type: 'box-fill', fill: 'end' },
-            { type: 'box-fill', fill: 'none' }
-        ],
-        options: [
-            { id: 'A', type: 'box-fill', fill: 'start' },
-            { id: 'B', type: 'box-fill', fill: 'end' },
-            { id: 'C', type: 'box-fill', fill: 'full' },
-            { id: 'D', type: 'box-fill', fill: 'center' }
-        ],
-        correctAnswer: 'C'
+        category: 'Number Series',
+        description: 'What number comes next? (hint: look at the alternating rule)',
+        sequence: ['10', '15', '12', '17', '14', '?'],
+        options: [{ id: 'A', value: '18' }, { id: 'B', value: '19' }, { id: 'C', value: '20' }, { id: 'D', value: '16' }],
+        correctAnswer: 'B'
     },
-    // Pattern 11: Mixed shape count
+    // 11. Letter pairs +2 pattern
     {
         id: 'nv11',
-        description: "Continue the shape and count pattern.",
-        category: 'Combined',
-        sequence: [
-            { type: 'shapes-count', count: 2, shape: 'circle' },
-            { type: 'shapes-count', count: 3, shape: 'square' },
-            { type: 'shapes-count', count: 4, shape: 'circle' },
-            { type: 'shapes-count', count: 5, shape: 'square' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 6, shape: 'square' },
-            { id: 'B', type: 'shapes-count', count: 6, shape: 'circle' },
-            { id: 'C', type: 'shapes-count', count: 5, shape: 'circle' },
-            { id: 'D', type: 'shapes-count', count: 7, shape: 'triangle' }
-        ],
-        correctAnswer: 'B'
+        category: 'Letter Series',
+        description: 'Which pair of letters continues the sequence?',
+        sequence: ['AC', 'CE', 'EG', 'GI', '?'],
+        options: [{ id: 'A', value: 'IK' }, { id: 'B', value: 'HJ' }, { id: 'C', value: 'JK' }, { id: 'D', value: 'IJ' }],
+        correctAnswer: 'A'
     },
-    // Pattern 12: Complex rotation
+    // 12. Subtracting series
     {
         id: 'nv12',
-        description: "The rotation increases by 15° more each step.",
-        category: 'Rotation',
-        sequence: [
-            { type: 'clock-line', rotation: 0 },
-            { type: 'clock-line', rotation: 15 },
-            { type: 'clock-line', rotation: 45 },
-            { type: 'clock-line', rotation: 90 }
-        ],
-        options: [
-            { id: 'A', type: 'clock-line', rotation: 120 },
-            { id: 'B', type: 'clock-line', rotation: 135 },
-            { id: 'C', type: 'clock-line', rotation: 150 },
-            { id: 'D', type: 'clock-line', rotation: 105 }
-        ],
+        category: 'Number Series',
+        description: 'What number comes next in the series?',
+        sequence: ['100', '90', '81', '73', '66', '?'],
+        options: [{ id: 'A', value: '58' }, { id: 'B', value: '59' }, { id: 'C', value: '60' }, { id: 'D', value: '61' }],
         correctAnswer: 'C'
     },
-    // Pattern 13: Triple count increase
+    // 13. Prime numbers
     {
         id: 'nv13',
-        description: "The count triples each step. What's next?",
-        category: 'Counting',
-        sequence: [
-            { type: 'shapes-count', count: 1, shape: 'circle' },
-            { type: 'shapes-count', count: 3, shape: 'circle' },
-            { type: 'shapes-count', count: 9, shape: 'circle' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 12, shape: 'circle' },
-            { id: 'B', type: 'shapes-count', count: 18, shape: 'circle' },
-            { id: 'C', type: 'shapes-count', count: 27, shape: 'circle' },
-            { id: 'D', type: 'shapes-count', count: 36, shape: 'circle' }
-        ],
-        correctAnswer: 'C'
+        category: 'Number Series',
+        description: 'What is the next prime number in the series?',
+        sequence: ['2', '3', '5', '7', '11', '?'],
+        options: [{ id: 'A', value: '12' }, { id: 'B', value: '13' }, { id: 'C', value: '14' }, { id: 'D', value: '15' }],
+        correctAnswer: 'B'
     },
-    // Pattern 14: Reverse rotation
+    // 14. Shift +1 each step on letter vowel/consonant alternation
     {
         id: 'nv14',
-        description: "Find the rotation pattern.",
-        category: 'Rotation',
-        sequence: [
-            { type: 'clock-line', rotation: 180 },
-            { type: 'clock-line', rotation: 150 },
-            { type: 'clock-line', rotation: 120 },
-            { type: 'clock-line', rotation: 90 }
-        ],
-        options: [
-            { id: 'A', type: 'clock-line', rotation: 60 },
-            { id: 'B', type: 'clock-line', rotation: 75 },
-            { id: 'C', type: 'clock-line', rotation: 45 },
-            { id: 'D', type: 'clock-line', rotation: 30 }
-        ],
-        correctAnswer: 'A'
-    },
-    // Pattern 15: Fibonacci-like count
-    {
-        id: 'nv15',
-        description: "Each count is the sum of the previous two.",
-        category: 'Counting',
-        sequence: [
-            { type: 'shapes-count', count: 1, shape: 'square' },
-            { type: 'shapes-count', count: 1, shape: 'square' },
-            { type: 'shapes-count', count: 2, shape: 'square' },
-            { type: 'shapes-count', count: 3, shape: 'square' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 4, shape: 'square' },
-            { id: 'B', type: 'shapes-count', count: 5, shape: 'square' },
-            { id: 'C', type: 'shapes-count', count: 6, shape: 'square' },
-            { id: 'D', type: 'shapes-count', count: 7, shape: 'square' }
-        ],
-        correctAnswer: 'B'
-    },
-    // Pattern 16: Shape cycling with count
-    {
-        id: 'nv16',
-        description: "Shapes cycle while count increases by 2.",
-        category: 'Combined',
-        sequence: [
-            { type: 'shapes-count', count: 1, shape: 'triangle' },
-            { type: 'shapes-count', count: 3, shape: 'circle' },
-            { type: 'shapes-count', count: 5, shape: 'square' },
-            { type: 'shapes-count', count: 7, shape: 'triangle' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 9, shape: 'square' },
-            { id: 'B', type: 'shapes-count', count: 9, shape: 'circle' },
-            { id: 'C', type: 'shapes-count', count: 8, shape: 'circle' },
-            { id: 'D', type: 'shapes-count', count: 10, shape: 'triangle' }
-        ],
-        correctAnswer: 'B'
-    },
-    // Pattern 17: Fill reversal pattern
-    {
-        id: 'nv17',
-        description: "Identify the fill reversal pattern.",
-        category: 'Alternation',
-        sequence: [
-            { type: 'box-fill', fill: 'full' },
-            { type: 'box-fill', fill: 'end' },
-            { type: 'box-fill', fill: 'center' },
-            { type: 'box-fill', fill: 'start' }
-        ],
-        options: [
-            { id: 'A', type: 'box-fill', fill: 'none' },
-            { id: 'B', type: 'box-fill', fill: 'full' },
-            { id: 'C', type: 'box-fill', fill: 'center' },
-            { id: 'D', type: 'box-fill', fill: 'start' }
-        ],
-        correctAnswer: 'A'
-    },
-    // Pattern 18: Skip count pattern
-    {
-        id: 'nv18',
-        description: "Count increases: +1, +2, +3, +4...",
-        category: 'Counting',
-        sequence: [
-            { type: 'shapes-count', count: 1, shape: 'circle' },
-            { type: 'shapes-count', count: 2, shape: 'circle' },
-            { type: 'shapes-count', count: 4, shape: 'circle' },
-            { type: 'shapes-count', count: 7, shape: 'circle' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 10, shape: 'circle' },
-            { id: 'B', type: 'shapes-count', count: 11, shape: 'circle' },
-            { id: 'C', type: 'shapes-count', count: 12, shape: 'circle' },
-            { id: 'D', type: 'shapes-count', count: 9, shape: 'circle' }
-        ],
-        correctAnswer: 'B'
-    },
-    // Pattern 19: Double rotation increment
-    {
-        id: 'nv19',
-        description: "Rotation increment doubles each time.",
-        category: 'Rotation',
-        sequence: [
-            { type: 'clock-line', rotation: 0 },
-            { type: 'clock-line', rotation: 10 },
-            { type: 'clock-line', rotation: 30 },
-            { type: 'clock-line', rotation: 70 }
-        ],
-        options: [
-            { id: 'A', type: 'clock-line', rotation: 110 },
-            { id: 'B', type: 'clock-line', rotation: 130 },
-            { id: 'C', type: 'clock-line', rotation: 150 },
-            { id: 'D', type: 'clock-line', rotation: 140 }
-        ],
+        category: 'Alternating',
+        description: 'What comes next in this alternating number-letter sequence?',
+        sequence: ['2A', '4B', '6C', '8D', '?'],
+        options: [{ id: 'A', value: '9E' }, { id: 'B', value: '10D' }, { id: 'C', value: '10E' }, { id: 'D', value: '12E' }],
         correctAnswer: 'C'
     },
-    // Pattern 20: Complex alternation with shapes
+    // 15. Odd-one-out style: powers of 2
+    {
+        id: 'nv15',
+        category: 'Number Series',
+        description: 'What number continues this pattern?',
+        sequence: ['3', '6', '12', '24', '?'],
+        options: [{ id: 'A', value: '36' }, { id: 'B', value: '42' }, { id: 'C', value: '48' }, { id: 'D', value: '30' }],
+        correctAnswer: 'C'
+    },
+    // 16. Mixed: alternating letters and squares
+    {
+        id: 'nv16',
+        category: 'Mixed Series',
+        description: 'Which item continues the pattern?',
+        sequence: ['A1', 'B4', 'C9', 'D16', '?'],
+        options: [{ id: 'A', value: 'E20' }, { id: 'B', value: 'E25' }, { id: 'C', value: 'F25' }, { id: 'D', value: 'E24' }],
+        correctAnswer: 'B'
+    },
+    // 17. Decrement halving
+    {
+        id: 'nv17',
+        category: 'Number Series',
+        description: 'What number comes next in the series?',
+        sequence: ['128', '64', '32', '16', '?'],
+        options: [{ id: 'A', value: '4' }, { id: 'B', value: '6' }, { id: 'C', value: '8' }, { id: 'D', value: '10' }],
+        correctAnswer: 'C'
+    },
+    // 18. Two-step letter: +2 then +3 alternating
+    {
+        id: 'nv18',
+        category: 'Letter Series',
+        description: 'Which letter comes next in the sequence?',
+        sequence: ['B', 'D', 'G', 'I', 'L', '?'],
+        options: [{ id: 'A', value: 'M' }, { id: 'B', value: 'N' }, { id: 'C', value: 'O' }, { id: 'D', value: 'P' }],
+        correctAnswer: 'B'
+    },
+    // 19. Sum rule: each = previous two added
+    {
+        id: 'nv19',
+        category: 'Number Series',
+        description: 'Each term is the sum of the two before it. What comes next?',
+        sequence: ['3', '5', '8', '13', '21', '?'],
+        options: [{ id: 'A', value: '30' }, { id: 'B', value: '32' }, { id: 'C', value: '34' }, { id: 'D', value: '29' }],
+        correctAnswer: 'C'
+    },
+    // 20. Complex: increment doubles each step
     {
         id: 'nv20',
-        description: "Shapes alternate while count follows pattern.",
-        category: 'Combined',
-        sequence: [
-            { type: 'shapes-count', count: 2, shape: 'square' },
-            { type: 'shapes-count', count: 4, shape: 'triangle' },
-            { type: 'shapes-count', count: 6, shape: 'square' },
-            { type: 'shapes-count', count: 8, shape: 'triangle' }
-        ],
-        options: [
-            { id: 'A', type: 'shapes-count', count: 10, shape: 'square' },
-            { id: 'B', type: 'shapes-count', count: 10, shape: 'triangle' },
-            { id: 'C', type: 'shapes-count', count: 12, shape: 'square' },
-            { id: 'D', type: 'shapes-count', count: 9, shape: 'circle' }
-        ],
-        correctAnswer: 'A'
+        category: 'Number Series',
+        description: 'The increment doubles each step. What comes next?',
+        sequence: ['1', '2', '4', '8', '16', '?'],
+        options: [{ id: 'A', value: '24' }, { id: 'B', value: '30' }, { id: 'C', value: '32' }, { id: 'D', value: '20' }],
+        correctAnswer: 'C'
     }
 ];
 
-// ============================================
 // VERBAL REASONING - 6 Passages with 20 total questions
 // ============================================
 export const verbalQuestions = [

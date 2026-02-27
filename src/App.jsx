@@ -344,18 +344,17 @@ function PersonaTest({ answers, onAnswer, onComplete }) {
   );
 }
 
-// 5c. Non-Verbal Test (Shapes) - TIMED: 15 minutes
+// 5c. Non-Verbal Reasoning Test — Text-Based Series (SHL/Korn Ferry style)
 function NonVerbalTest({ answers, onAnswer, onComplete }) {
   const [currentQ, setCurrentQ] = useState(0);
   const [timerStarted, setTimerStarted] = useState(false);
 
-  // Start timer when component mounts
   useEffect(() => {
     setTimerStarted(true);
   }, []);
 
-  const handleSelect = (val) => {
-    onAnswer(currentQ, val);
+  const handleSelect = (optId) => {
+    onAnswer(currentQ, optId);
     if (currentQ < nonVerbalQuestions.length - 1) {
       setCurrentQ(currentQ + 1);
     } else {
@@ -364,57 +363,17 @@ function NonVerbalTest({ answers, onAnswer, onComplete }) {
   };
 
   const handleTimeUp = () => {
-    // Auto-submit when time runs out
     onComplete({ timedOut: true, questionsAnswered: Object.keys(answers).length });
   };
 
   const q = nonVerbalQuestions[currentQ];
-
-  // Shape icons for count display
-  const shapeIcon = { circle: '●', square: '■', triangle: '▲' };
-
-  // Helper to render shapes based on type
-  const renderShape = (shapeConfig) => {
-    if (shapeConfig.type === 'clock-line') {
-      return (
-        <div className="shape-box clock-box">
-          <div className="clock-hand" style={{ transform: `rotate(${shapeConfig.rotation}deg)` }}></div>
-        </div>
-      );
-    }
-    if (shapeConfig.type === 'shapes-count') {
-      const count = shapeConfig.count;
-      const shape = shapeConfig.shape;
-      // For small counts (≤6): show actual dots for visual clarity
-      // For large counts (>6): show bold number + shape icon — unambiguous even on mobile
-      if (count <= 6) {
-        return (
-          <div className="shape-box count-box">
-            {Array.from({ length: count }).map((_, i) => (
-              <div key={i} className={`mini-shape ${shape}`}></div>
-            ))}
-          </div>
-        );
-      } else {
-        return (
-          <div className="shape-box count-box count-box-numeric">
-            <span className="count-number">{count}</span>
-            <span className="count-shape-icon">{shapeIcon[shape] || '●'}</span>
-          </div>
-        );
-      }
-    }
-    if (shapeConfig.type === 'box-fill') {
-      return <div className={`shape-box fill-box ${shapeConfig.fill}`}></div>;
-    }
-    return <div className="shape-box error">?</div>;
-  };
+  const selected = answers[currentQ];
 
   return (
     <div className="section test-section timed-section">
       <div className="test-header with-timer">
         <div className="header-left">
-          <h3>Module 3: Non-Verbal Reasoning</h3>
+          <h3>Module 3: Abstract Reasoning</h3>
           <div className="progress-info">{currentQ + 1} / {nonVerbalQuestions.length}</div>
         </div>
         <Timer
@@ -427,26 +386,30 @@ function NonVerbalTest({ answers, onAnswer, onComplete }) {
         <span className="notice-icon">⏱️</span>
         <span>This section is timed. Complete all questions before time runs out.</span>
       </div>
-      <div className="non-verbal-container">
-        <p className="instruction-text">{q.description}</p>
+
+      <div className="series-container">
         {q.category && <span className="question-category">{q.category}</span>}
-        <div className="sequence-row">
-          {q.sequence.map((item, i) => (
-            <div key={i} className="sequence-item">
-              {renderShape(item)}
+        <p className="instruction-text">{q.description}</p>
+
+        {/* Sequence row */}
+        <div className="series-row">
+          {q.sequence.map((term, i) => (
+            <div key={i} className={`series-term ${term === '?' ? 'series-placeholder' : ''}`}>
+              {term}
             </div>
           ))}
-          <div className="sequence-item placeholder">?</div>
         </div>
-        <div className="options-row">
+
+        {/* Answer options — 2×2 grid */}
+        <div className="series-options">
           {q.options.map((opt) => (
             <button
               key={opt.id}
-              className={`shape-option-btn ${answers[currentQ] === opt.id ? 'selected' : ''}`}
+              className={`series-opt-btn ${selected === opt.id ? 'selected' : ''}`}
               onClick={() => handleSelect(opt.id)}
             >
-              {renderShape(opt)}
-              <span className="opt-label">{opt.id}</span>
+              <span className="series-opt-label">{opt.id}</span>
+              <span className="series-opt-value">{opt.value}</span>
             </button>
           ))}
         </div>
@@ -455,41 +418,49 @@ function NonVerbalTest({ answers, onAnswer, onComplete }) {
   );
 }
 
-// 5d. Verbal Test - TIMED: 10 minutes
+
+// 5d. Verbal Reasoning Test — Watson-Glaser style: passage + one question at a time
 function VerbalTest({ answers, onAnswer, onComplete }) {
-  const [currentPassageIdx, setCurrentPassageIdx] = useState(0);
   const [timerStarted, setTimerStarted] = useState(false);
 
-  // Start timer when component mounts
+  // Flatten all questions with their parent passage
+  const allQuestions = verbalQuestions.flatMap(passage =>
+    passage.questions.map(q => ({ ...q, passage }))
+  );
+
+  // Find first unanswered question index
+  const firstUnanswered = allQuestions.findIndex(q => !answers[q.id]);
+  const [currentIdx, setCurrentIdx] = useState(firstUnanswered >= 0 ? firstUnanswered : 0);
+
   useEffect(() => {
     setTimerStarted(true);
   }, []);
 
-  const passage = verbalQuestions[currentPassageIdx];
-  const questionsForPassage = passage.questions;
-
-  // Check if all questions for this passage are answered
-  const allAnswered = questionsForPassage.every(q => answers[q.id]);
-
   const handleTimeUp = () => {
-    // Auto-submit when time runs out
     onComplete({ timedOut: true, questionsAnswered: Object.keys(answers).length });
   };
 
-  const handleNext = () => {
-    if (currentPassageIdx < verbalQuestions.length - 1) {
-      setCurrentPassageIdx(currentPassageIdx + 1);
-    } else {
-      onComplete({ timedOut: false, questionsAnswered: Object.keys(answers).length });
-    }
+  const handleSelect = (qId, opt) => {
+    onAnswer(qId, opt);
+    setTimeout(() => {
+      if (currentIdx < allQuestions.length - 1) {
+        setCurrentIdx(currentIdx + 1);
+      } else {
+        onComplete({ timedOut: false, questionsAnswered: Object.keys(answers).length + 1 });
+      }
+    }, 300);
   };
 
+  const item = allQuestions[currentIdx];
+  const passage = item.passage;
+  const selected = answers[item.id];
+
   return (
-    <div className="section test-section verbal-layout timed-section">
+    <div className="section test-section timed-section">
       <div className="test-header with-timer">
         <div className="header-left">
           <h3>Module 4: Verbal Reasoning</h3>
-          <div className="progress-info">Passage {currentPassageIdx + 1} / {verbalQuestions.length}</div>
+          <div className="progress-info">Q{currentIdx + 1} / {allQuestions.length}</div>
         </div>
         <Timer
           totalSeconds={testTimeLimits.verbal}
@@ -499,65 +470,64 @@ function VerbalTest({ answers, onAnswer, onComplete }) {
       </div>
       <div className="timed-test-notice">
         <span className="notice-icon">⏱️</span>
-        <span>This section is timed. Complete all passages before time runs out.</span>
+        <span>Read the passage, then decide if the statement is True, False, or Cannot Say.</span>
       </div>
-      <div className="split-screen">
-        <div className="passage-pane">
+
+      <div className="verbal-single-layout">
+        {/* Passage card */}
+        <div className="verbal-passage-card">
           <div className="passage-header">
-            <h4>Reading Passage {currentPassageIdx + 1}</h4>
+            <span className="passage-label">PASSAGE</span>
             {passage.topic && <span className="topic-badge">{passage.topic}</span>}
           </div>
           <p className="passage-text">{passage.text}</p>
         </div>
-        <div className="questions-pane">
-          {questionsForPassage.map(q => (
-            <div key={q.id} className="verbal-q-card">
-              <p className="vq-prompt">{q.prompt}</p>
-              <div className="vq-options">
-                {q.options.map(opt => (
-                  <button
-                    key={opt}
-                    className={`vq-btn ${answers[q.id] === opt ? 'selected' : ''}`}
-                    onClick={() => onAnswer(q.id, opt)}
-                  >
-                    {opt}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
-          <button
-            className="btn btn-primary full-width"
-            disabled={!allAnswered}
-            onClick={handleNext}
-          >
-            {currentPassageIdx === verbalQuestions.length - 1 ? 'Finish Battery' : 'Next Passage'}
-          </button>
+
+        {/* Single question card */}
+        <div className="verbal-question-card">
+          <p className="vq-prompt">"{item.prompt}"</p>
+          <div className="vq-options-row">
+            {item.options.map(opt => (
+              <button
+                key={opt}
+                className={`vq-btn-large ${selected === opt ? 'selected' : ''}`}
+                onClick={() => handleSelect(item.id, opt)}
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
+
 // 6. Completion Popup
 function CompletionModal({ onShowResults, isSubmitting = false }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <div className="success-icon">{isSubmitting ? '⏳' : '✨'}</div>
-        <h2>{isSubmitting ? 'Saving Results...' : 'Battery Complete'}</h2>
-        <p>{isSubmitting ? 'Please wait while we save your assessment.' : 'Congratulations. Your profile has been analyzed.'}</p>
+        <div className="success-icon">{isSubmitting ? '⏳' : '🎉'}</div>
+        <h2>{isSubmitting ? 'Saving Results...' : 'Assessment Complete!'}</h2>
+        <p>
+          {isSubmitting
+            ? 'Please wait while we save your assessment.'
+            : 'Thanks for completing the test. Please download your results and submit them to move ahead in the process.'}
+        </p>
         <button
           className="btn btn-primary pulse-animation"
           onClick={onShowResults}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Processing...' : 'View Admission Results'}
+          {isSubmitting ? 'Processing...' : 'View & Download Results'}
         </button>
       </div>
     </div>
   );
 }
+
 
 // 7. Results Dashboard - Comprehensive & Detailed
 function GamifiedResults({ hexacoResults, personaResults, nvResults, vResults, userData, sessionId, submitError, sectionTimings = {} }) {
